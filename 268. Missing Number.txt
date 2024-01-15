@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        vector<int> res;
+        for(int i =0;i<=nums.size();i++){
+            res.push_back(1);
+        }
+        for(int i =0;i<nums.size();i++){
+            res[nums[i]]--;
+        }
+        for(int i = 0;i<res.size();i++){
+            if(res[i]!=0){
+                return i;
+            }
+        }
+        return 0;
+
+    }
+};
+// alternative approch can be by finding the sum of all the number 
+// and find the sum of range and returning the diffrence of sum
+
+// class Solution {
+// public:
+//     int missingNumber(vector<int>& nums) {
+//         int n = nums.size()
+//         int arr_total,range_total = (n*(n+1))/2;
+//         for(int i=0; i<n; i++){
+//             arr_total += nums[i];
+//         }
+//         return (range_total-arr_total);
+//     }
+// };
