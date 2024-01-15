@@ -1,7 +1,10 @@
-hello guys 
-this is a repo that contains all the solutions of the questions i did during a 30 days winter dsa challange 
-this contains the approach that i came with and some of them also contain the best approch to a question 
+### Hello guys !!! 
+* This is a repositories that contains all the solutions of the questions i will be doing during a 30 days winter dsa coding challenge in leetcode.
 
-at the last i will also upload the Excel sheets that has the 30days road map for both beginners and advance coders 
+* This contains the approach that i came with during the challenge *(that may and may-not be the best)* 
 
-keep coding have fun 
+* And some of them also contain the best approch to a questions. 
+
+* At the last, I will also upload the Excel sheets that contain the 30 days roadmap for both beginners and advance coders. 
+
+### Keep coding Have fun !!! 
