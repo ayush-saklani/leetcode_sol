@@ -1,0 +1,38 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums){
+        int zerocount=0;
+        for(int i = 0 ; i < nums.size() ; i++){
+            if(nums[i]==0){
+                zerocount++;
+                for(int j = i ; j < nums.size()-zerocount ; j++){
+                    nums[j]=nums[j+1];
+                }
+                if(nums[nums.size()-zerocount]==0){
+                    nums[nums.size()-zerocount]=99; 
+                }
+                i--;
+            }
+        }
+        for(int i = 0;i<zerocount;i++){
+            nums.pop_back();
+        }
+        for(int i = 0;i<zerocount;i++){
+            nums.push_back(0);
+        }
+    }
+};
+// alternate or better approach
+
+// class Solution {
+// public:
+//     void moveZeroes(std::vector<int>& nums) {
+//         int i = 0;
+//         for (int j = 0; j < nums.size(); j++) {
+//             if (nums[j] != 0) {
+//                 swap(nums[i], nums[j]);
+//                 i++;
+//             }
+//         }
+//     }
+// };
