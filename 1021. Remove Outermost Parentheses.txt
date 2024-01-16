@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string removeOuterParentheses(string s) {
+        vector<char> str(s.begin(), s.end());
+        vector<char> res;
+        int lock=0;
+        for(int i=0 ; i<str.size() ; i++){
+            if(str[i]=='('){
+                if(lock==0) lock++;
+                else{
+                    res.push_back(str[i]);
+                    lock++;  
+                }
+            }
+            else if(str[i]==')'){
+                if(lock==1) lock--;
+                else{
+                    res.push_back(str[i]);
+                    lock--;  
+                }
+            }
+            else  res.push_back(str[i]);
+        }
+        string fstr(res.begin(), res.end()); 
+        return fstr;
+    }
+};
