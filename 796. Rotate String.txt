@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string rotate(string goal){
+        char temp=goal[0];
+        for(int i = 0;i<goal.length()-1;i++){
+            goal[i]=goal[i+1];
+        }
+        goal[goal.length()-1]=temp;
+        return goal;
+    }
+    bool rotateString(string s, string goal) {
+        if(s.length()!=goal.length()) return false;
+        for(int i = 0 ;i<s.length();i++){
+            if(s==goal) return true;
+            else  goal=rotate(goal);
+        }
+        return false;
+    }
+};

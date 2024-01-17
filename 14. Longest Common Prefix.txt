@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& str) {
+        string res="";
+        sort(str.begin(),str.end());
+        // min(str[0].size(),str[str.size()-1].size()) finds the minimum string length for checking as 
+        // we have sorted the vector according to the length of strings
+        for (int i = 0; i < min(str[0].size(),str[str.size()-1].size()) ; i++){
+            char temp = str[0][i];
+            for(int j = 0; j < str.size(); j++){
+                if(temp!=str[j][i]){
+                    return res;
+                }
+            }
+            res+=temp;
+        }
+        return res;
+    }
+};
