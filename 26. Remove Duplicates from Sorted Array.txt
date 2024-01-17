@@ -10,8 +10,9 @@ public:
         }
         return j;
     }
-};
+}; 
 // alternative approch 
+
 // class Solution {
 // public:
 //     int removeDuplicates(vector<int>& nums) {
