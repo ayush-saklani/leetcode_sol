@@ -1,4 +1,4 @@
-# Winter  DSA Coding Challenge❄️⛄ + General Problems Repository🧑‍💻 (Leetcode)<img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/LeetCode_Logo_black_with_text.svg" width="120"/>
+# Winter  DSA Coding Challenge❄️⛄ + General Problems Repository🧑‍💻 (Leetcode)
 <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" width="80" height="80"/>
 
 
