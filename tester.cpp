@@ -1,20 +1,24 @@
 #include <bits/stdc++.h>
-#include <vector>
+// #include <vector>
 using namespace std;
 int main(){
-    vector<string> str = {"dog","racecar","car"};
-    string res="";
-    sort(str.begin(),str.end());
-    int x = min(str[0].size(),str[str.size()-1].size());
-    for (int i = 0; i < x; i++){
-        char temp = str[0][i];
-        for(int j = 0; j < str.size(); j++){
-            if(temp!=str[j][i]){
-                // return res;
+    string s="   -42";
+    vector<char> str(s.begin(),s.end());
+        int res=0;        
+        int lock=0;
+        for(int i = 0 ; i<str.size() ; i++){
+            cout<<(str[i])<<endl;
+            if(str[i]==' ') ;
+            else if(str[i]=='-') lock++;
+            else if(int(str[i]-'0')>=0 && int(str[i]-'0')<=9){
+                res=(res*10)+int(str[i]-'0');
             }
         }
-        res+=temp;
-    }
-    // return res;
-    cout<< res;
+        if(lock!=0){
+            cout<<(res*-1)<<endl;
+        }
+        else{
+            cout<< res;
+        }
+        // return res;
 }
