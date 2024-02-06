@@ -22,7 +22,7 @@ Hey folks! 👋 Welcome to my repository that houses solutions for the 30-day Wi
 
 ## Why Follow?
 
-Coding is a journey, and this repository is a glimpse into mine. Let's learn, grow, and have fun coding together! and who knows it might end up helping you 😄
+Coding is a journey,  and this repository is a glimpse into mine. Let's learn, grow, and have fun coding together! and who knows it might end up helping you 😄
 
 #
 ### **Keep Coding, Keep Smiling!, Have Fun!** 💻😄🚀
