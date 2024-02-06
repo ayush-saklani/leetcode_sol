@@ -1,0 +1,31 @@
+// approach 1
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int local_maxima = 1; // Initialize to 1 as at least 1 element is always consecutive
+        int longest_streak = 1; // Initialize to 1 as at least 1 element is always consecutive
+        
+        if(nums.size()<1)   return 0;
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] != nums[i-1]) { // Handling duplicate numbers
+                if (nums[i] - nums[i-1] == 1)   local_maxima++;
+                else{
+                    if(local_maxima>longest_streak){
+                        longest_streak=local_maxima;
+                    }
+                    local_maxima = 1; // Reset local_maxima for the new streak
+                }
+            }
+        }
+        // Update longest_streak in case the longest consecutive sequence ends at the last element
+        if(local_maxima>longest_streak){
+            longest_streak=local_maxima;
+        }
+        return longest_streak;
+    }
+};
+
+// approach 2
+
