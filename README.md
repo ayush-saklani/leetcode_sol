@@ -3,9 +3,10 @@
 
 Hey folks! 👋 Welcome to my repository that houses solutions for the 30-day Winter DSA (Data Structures and Algorithms) ❄️ + solutions from general problem solving sessions coding challenge on LeetCode.
 ## Coding Language Used 
+<p align="left">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" width="60" height="60"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" width="60" height="60"/>
-
+</p>
           
 
 ## What's Inside?
