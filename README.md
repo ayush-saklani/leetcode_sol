@@ -1,8 +1,7 @@
 # Winter  DSA Coding Challenge❄️⛄ + General Problems Repository🧑‍💻 (Leetcode)
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/19/LeetCode_logo_black.png" width="80" height="80"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/LeetCode_logo_white_no_text.svg" width="80" />
 
-
-Hey folks! 👋 Welcome to my repository that houses solutions for the 30-day Winter DSA (Data Structures and Algorithms) ❄️ + solutions from general problem solving sessions coding challenge on LeetCode.
+**Hey folks!** 👋 Welcome to my repository that houses solutions for the 30-day Winter DSA (Data Structures and Algorithms) ❄️ + solutions from general problem solving sessions coding challenge on LeetCode.
 ## Coding Language Used 
 <p align="left">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" width="60" height="60"/>
