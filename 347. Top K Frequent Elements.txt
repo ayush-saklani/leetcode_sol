@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> hashmap;
+        for (auto i :nums){
+            hashmap[i]++;           //iska matlab hashmap ke nums[i]th pe +1 kardo 
+        }
+        vector<pair<int, int>> vec;
+        for (auto i : hashmap){
+            vec.push_back(pair{i.first,i.second});
+        }
+        sort(vec.begin(), vec.end(),[](auto a, auto b){return a.second > b.second;}); 
+                        //lambda function in c is used (one-liner, singly used function so that doesn't need a name )
+        vector<int> ans;
+        for (int i = 0; i < k; i++) {
+            ans.push_back(vec[i].first);
+        }
+        return ans;
+    }
+};
