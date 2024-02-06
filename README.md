@@ -5,6 +5,7 @@ Hey folks! 👋 Welcome to my repository that houses solutions for the 30-day Wi
 ## Coding Language Used 
 <p align="left">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" width="60" height="60"/>
+<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.m.wikipedia.org%2Fwiki%2FFile%3ALeetCode_Logo_black_with_text.svg&psig=AOvVaw1GaGmedh_woXqQfgeHnC1Y&ust=1707300108439000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCJjI2Na6loQDFQAAAAAdAAAAABAE" width="60" height="60"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" width="60" height="60"/>
 </p>
           
