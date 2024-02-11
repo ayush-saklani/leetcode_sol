@@ -29,3 +29,66 @@ public:
 
 // approach 2
 
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_map<int,bool> m ;
+        for(auto i :nums){
+            m[i]=true;
+        }
+        int local_len=0,res=0;
+        for(auto i : nums){
+            if(m[i]==true){
+                local_len=1;
+                int j=1;int k=1;
+                m[i]=false;
+                while(m[i-k] == true){
+                    m[i-k]=false;
+                    k++;
+                    local_len++;
+                }
+                while(m[i+j] == true){
+                    m[i+j]=false;
+                    local_len++;
+                    j++;
+                }
+                if(local_len>res) res=local_len;
+            }
+        }
+        return res;
+    }
+};
+
+// approach 3 
+// similar to approach 2 (but heavier)
+// same same but diffland :p
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_map<int,bool> m ;
+        for(auto i :nums){
+            m[i]=true;
+        }
+        int local_len=0,res=0;
+        for(auto i : nums){
+            if(m[i]==true){
+                local_len = 1;
+                int j=1,k=1;
+                m.erase(i);
+                while(m[i-k] == true){
+                    m.erase(i-k);
+                    k++;
+                    local_len++;
+                }
+                while(m[i+j] == true){
+                    m.erase(i+j);
+                    j++;
+                    local_len++;
+                }
+                if(local_len>res) res=local_len;
+            }
+        }
+        return res;
+    }
+};

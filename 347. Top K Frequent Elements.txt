@@ -18,3 +18,27 @@ public:
         return ans;
     }
 };
+
+// bucket sort approach
+
+//  class Solution {
+//  public:
+//      vector<int> topKFrequent(vector<int>& nums, int k) {
+//          unordered_map<int, int> hashmap;
+//          for (auto i :nums){
+//              hashmap[i]++;           //iska matlab hashmap ke nums[i]th pe +1
+//          }
+//          vector<vector<int>> bucket(nums.size()+1);
+//          for(auto i:hashmap){
+//              bucket[i.second].push_back(i.first);
+//          }
+//          vector<int> ans;
+//          for(int j=bucket.size()-1;j>=0 && ans.size()<k;j--){
+//              for(auto i: bucket[j]){
+//                  ans.push_back(i);
+//                  if(ans.size() == k)break;
+//              }
+//          }
+//          return ans;
+//      }
+//  };
