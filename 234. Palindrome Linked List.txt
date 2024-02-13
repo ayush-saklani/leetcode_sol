@@ -1,0 +1,122 @@
+234. Palindrome Linked List
+// approach 1
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        vector<int> temp,temp2;
+        while(head->next!=NULL){
+            temp.push_back(head->val);
+            head=head->next;
+        }
+        temp.push_back(head->val);
+        temp2=temp;
+        reverse(temp.begin(),temp.end());
+        if(temp==temp2) return true;
+
+        return false;
+    }
+};
+
+
+
+
+
+
+
+// approach 2
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int length(ListNode* td){
+        int length=0;
+        while(td->next!=NULL){
+            length++;
+            td=td->next;
+        }
+        return (length+1);
+    }
+    bool isPalindrome(ListNode* head) {
+        stack<int> st;
+        ListNode *td = head;
+        int len = length(td);
+        if(len<2) return true;
+        int i = 0;
+        while(i<(len/2)){
+            st.push(head->val);
+            head=head->next;
+            i++;
+        }
+        if(len%2!=0) head=head->next; 
+        while(head->next!=NULL){
+            if(st.top()!=head->val) return false;
+            st.pop();
+            head=head->next;
+        }
+        if(st.top()!=head->val) return false;
+        return true;
+    }
+};
+
+
+
+// approach 2.5 better code
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int length(ListNode* td){
+        int length=0;
+        while(td->next!=NULL){
+            length++;
+            td=td->next;
+        }
+        return (length+1);
+    }
+    bool isPalindrome(ListNode* head) {
+        stack<int> st;
+        ListNode *td = head;
+        int len = length(td);
+        if(len<2) return true;
+        for(int i = 0;i<(len/2);i++){
+            st.push(head->val);
+            head=head->next;
+        }
+        if(len%2!=0) head=head->next; 
+        while(head!=NULL){
+            if(st.top()!=head->val) return false;
+            st.pop();
+            head=head->next;
+        }
+        return true;
+    }
+};
