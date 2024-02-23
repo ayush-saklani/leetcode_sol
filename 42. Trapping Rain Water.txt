@@ -1,3 +1,30 @@
+//approach 1
+
+class Solution {
+public:
+    int trap(vector<int>& h) {
+        vector<int> r, l;
+        int max = h[0];
+        for(int i =0;i<h.size();i++){
+            if(h[i]>=max) max=h[i];
+            l.push_back(max);
+        }
+        max = h[h.size()-1];
+        for(int i =h.size()-1;i>=0;i--){
+            if(h[i]>=max) max=h[i];
+            r.push_back(max);
+        }
+        reverse(r.begin(),r.end());
+        int water = 0;        
+        for(int i =0;i<h.size();i++){
+            water=water+(min(l[i],r[i])-h[i]);
+        }
+        return water;
+    }
+};
+
+//approach 2
+
 class Solution {
 public:
     int trap(vector<int>& height) {

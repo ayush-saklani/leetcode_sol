@@ -1,0 +1,44 @@
+// approach 1
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        vector<char> res;
+        for(int i = 0;i<s.length();i++){
+            if((s[i]>='A' && s[i]<='Z') || (s[i]>='a' && s[i]<='z') || (s[i]>=48 && s[i]<=57)){
+                res.push_back(tolower(s[i]));
+            }
+        }
+        vector<char> res2 = res;
+        reverse(res.begin(),res.end());
+        return res==res2 ? true:false;
+    }
+};
+
+
+// approach 2
+// instead of taking another vector + reversing the vector O(n) space O(n) time
+// we will use 2 pointer to do the comparition O(n) time
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        vector<char> res;
+        char temp;
+        for(int i = 0;i<s.length();i++){
+            temp = tolower(s[i]);
+            if((temp>='a' && temp<='z') || (temp>=48 && temp<=57)){
+                res.push_back(temp);
+            }
+        }
+        int l = 0,r = res.size()-1;
+        while(l<r){
+            if(res[l]!=res[r]){
+                return false;
+            }
+            l++;
+            r--;
+        }
+        return true;
+    }
+};  
