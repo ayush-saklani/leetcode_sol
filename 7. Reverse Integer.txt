@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int reverse(int x) {
+        long res=0;
+        while(x){
+            res=(res*10)+(x%10);
+            x=x/10;
+        }
+        if(res< INT_MIN  || res>= INT_MAX)  return 0;
+        return res;
+    }
+};
+ 
+// approach 2 as long is not allowed so we will 
+// check the number before it goes in the overflow condition
+
+class Solution {
+public:
+    int reverse(int x) {
+        long res=0;
+        while(x){
+            if(res< INT_MIN/10  || res> INT_MAX/10)  return 0;        
+            res=(res*10)+(x%10);
+            x=x/10;
+        }
+        
+        return res;
+    }
+};
+
+// eg lets say int max = 2000 and num currently is 201
+// this is certain that in next interation will garrenteed overflow as 201x so we will use the intmax/10 thrushold to stop it just before overflow and it will be in the loop because it is not in the end yet
