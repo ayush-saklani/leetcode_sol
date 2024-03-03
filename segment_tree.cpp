@@ -48,19 +48,19 @@ int calculateSum(int *arr, int *segment_tree, int sl, int sr, int index, int ql,
             calculateSum(arr, segment_tree, mid+1, sr, 2*index+2, ql, qr);
 }
 int main(){
-    int n, *arr, Q, index, key, l, r, type;
+    int n, index, key, l, r;
     cin>>n;
-    arr = new int[n];
+    int* arr = new int[n];
     for (int i = 0; i < n; i++){
         cin>>arr[i];
     }
     int segmentSize = calculate_size(n);
     int *segment_tree = init(segmentSize);
     buildTree(segment_tree, arr, 0, n-1, 0);
-    cin>>Q;
-    while(Q--){
-		cin>>type;
-		switch(type){
+    while(1){
+        int choice;
+		cin>>choice;
+		switch(choice){
         case 1: 
             cin>>index>>key;
 			update(arr, segment_tree, n, index, key);
@@ -70,6 +70,9 @@ int main(){
             cin>>l>>r;
 			cout<<"Sum = "<<calculateSum(arr, segment_tree, 0, n-1, 0, l, r)<<endl;
 			break;
+        default:
+            cout<<"wrong choice";
+            return 0;
 		}
 	}
     return 0;
