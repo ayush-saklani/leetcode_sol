@@ -1,3 +1,4 @@
-tester.exe
+*.exe
 tester.cpp
 notebook.txt
+*.gitignore
