@@ -1,0 +1,38 @@
+// approach 1
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int flag = 0;
+        int n = nums.size();
+        for(int i=0;i<n;i++){
+            if(nums[i] == val){
+                nums[i] = INT_MAX;
+                flag++;
+            }
+        }
+        sort(nums.begin(),nums.end());
+        cout<<flag;
+        return n-flag;
+    }
+};
+
+// approach 2
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int n = nums.size();
+        sort(nums.begin(),nums.end());
+        int i,j;
+        for(i = 0; i < n; i++){
+            if(nums[i] == val){
+                break;
+            }
+        }
+        for(j = i+1; j < n; j++){
+            if(nums[j] > val){
+                nums[i++] = nums[j]; 
+            }
+        }
+        return i;
+    }
+};
