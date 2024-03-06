@@ -12,7 +12,6 @@ int* decompose(int*arr,int n){
     return res;
 }
 int sum_query(int* arr,int* block,int n,int ql,int qr){
-    int sq_n=ceil(sqrt(n));
     int block_size = ceil(sqrt(n));
     int block_start=ql/block_size,block_end=qr/block_size;
     int res=0,i;
