@@ -1,0 +1,87 @@
+// approach 1 //better approach, in this we reverse the second half linklist and then add to the new link list
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        ListNode* half = head;
+        ListNode* last = head;
+        while(last!=NULL && last->next!=NULL && last->next->next!=NULL){
+            half=half->next;
+            last=last->next->next;
+        }
+        ListNode* prev = NULL;
+        ListNode* curr = half->next;
+        ListNode* next;
+        while(curr!=NULL){
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+        }
+        half->next=NULL;
+        ListNode* end = prev;
+        ListNode* res = new ListNode(0);
+        ListNode* temp_res = res;
+        int i=0;
+        ListNode* temp=head;
+        while(temp!=NULL && end!=NULL){
+            if(i%2==0){
+                temp_res->next=temp;
+                temp=temp->next;
+                temp_res=temp_res->next;
+            }
+            else{
+                temp_res->next=end;
+                end=end->next;
+                temp_res=temp_res->next;
+            }
+            i++;
+        }
+        if(end) temp_res->next=end;
+        else temp_res->next=temp;
+        head=res;
+    }
+};
+
+
+
+// approach 2
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        ListNode* temp = head;
+        int n = 0;
+        while(temp!=NULL){
+            if(!temp || !temp->next || !temp->next->next) return;
+            ListNode* slast = head;
+            while(slast->next->next!=NULL){
+                slast=slast->next;
+            }
+            slast->next->next=temp->next;
+            temp->next=slast->next;
+            slast->next=NULL;
+            temp=temp->next->next;
+        }
+    }
+};
