@@ -5,7 +5,7 @@ int* decompose(int*arr,int n){
     int* res = new int[block_size];
     for (int i = 0; i < block_size; i++){
         res[i]=0;
-    }
+    } 
     for (int i = 0; i < n; i++){
         res[i/block_size]+=arr[i];
     }
