@@ -1,1 +1,76 @@
-208. Implement Trie (Prefix Tree)
+class trie_node{
+    trie_node * child[26];
+    public:
+    bool isword;
+    trie_node(){
+        isword=false;
+        for (int i = 0; i < 26; i++)
+            child[i]=NULL;
+    }
+    void insert(string str,trie_node* root){
+        int n = str.length();
+        trie_node* t=root;
+        for(int i =0;i<n;i++){
+            if(root->child[str[i]-'a']==NULL){
+                trie_node* temp = new trie_node();
+                root->child[str[i]-'a']=temp;
+                root=root->child[str[i]-'a'];
+            }
+            else
+                root=root->child[str[i]-'a'];
+        }
+        root->isword=true;
+    }
+    bool check(string str,trie_node* root){
+        int n = str.length();
+        for(int i =0;i<n;i++){
+            if(!root->child[str[i]-'a'])
+                return false;
+            else
+                root=root->child[str[i]-'a'];
+        }
+        if(root->isword==true)
+            return true;
+        return false;
+    }
+    bool startsWith(string str,trie_node* root){
+        int n = str.length();
+        for(int i =0;i<n;i++){
+            if(!root->child[str[i]-'a'])
+                return false;
+            else
+                root=root->child[str[i]-'a'];
+        }
+        if(!root)
+            return false;
+        return true;
+    } 
+};
+class Trie {
+public:
+    trie_node* root;
+    Trie(){
+        root = new  trie_node();
+    }
+    void insert(string word) {
+        root->insert(word,root);
+    }
+    
+    bool search(string word) {
+        return root->check(word,root);
+    }
+    
+    bool startsWith(string prefix) {
+        return root->startsWith(prefix,root);
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
+
+  
