@@ -1,18 +1,20 @@
 #include<iostream>
+#include<bits/stdc++.h> 
 using  namespace std;   
 class trie_node{
     trie_node * child[26];
     public:
     bool isword;
+    string meaning;
     trie_node(){
         for (int i = 0; i < 26; i++){
             child[i]=NULL;
         }
         isword=false;
+        meaning = "";
     }
-    void insert(string str,trie_node* root){
+    void insert(string str,trie_node* root,string meaning){
         int n = str.length();
-        trie_node* t=root;
         for(int i =0;i<n;i++){
             if(root->child[str[i]-'a']==NULL){
                 trie_node* temp = new trie_node();
@@ -24,6 +26,7 @@ class trie_node{
             }
         }
         root->isword=true;
+        root->meaning = meaning;
     }
     void check(string str,trie_node* root){
         int n = str.length();
@@ -41,6 +44,7 @@ class trie_node{
         if(root->isword==true){
             cout<<root->isword<<" "<<endl;
             cout<<"word exists"<<endl;
+            cout<<"Meaning :::: "<<root->meaning<<endl;
         } 
         else if(root->isword==false){
             cout<<root->isword<<" "<<endl;
@@ -58,6 +62,7 @@ class trie_node{
         }
         else{
             root->isword=false;
+            root->meaning = "";
             return ;
         }
     }
@@ -65,7 +70,9 @@ class trie_node{
         if(root->isword==true) return false;
         for (int i = 0; i < 26; i++){
             if(root->child[i]){
-                    return false;
+                    return false; //child hai to delete nahi karna hai i.e false
+                // if(root->child[i]->isword==true){
+                // }
             }
         }
         return true;
@@ -84,6 +91,7 @@ class trie_node{
         else{
             cout<<root->isword<<" "<<endl;
             root->isword=false;
+            root->meaning = "";
             bool checking = checker(root);
             if(checking == false)return  false;
             else {
@@ -113,14 +121,17 @@ int main(){
     cout<<"press 2 for delete"<<endl;
     cout<<"press 3 for check"<<endl;
     cout<<"press 4 for false delete"<<endl;
-    string str;
+    string str,meaningly;
     while(1) {
-        cout<<"choice ";
+        cout<<"Choice :::: ";
         cin>>choice;
+        cout<<"word :::: ";
         cin>>str;
         switch (choice){
         case 1:
-            root->insert(str,root);
+            cout<<"Meaning :::: ";
+            getline(cin,meaningly);
+            root->insert(str,root,meaningly);
             break;
         case 2:
             root->true_delete_word(str,root,0);

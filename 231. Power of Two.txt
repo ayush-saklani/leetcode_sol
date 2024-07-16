@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if( n == 0 ) return false;
+        if( n == 1 ) return true;
+        int flag=0;
+        while(n){
+            if(n&1 == 1){
+                flag++;
+                if(flag > 1){
+                    return false;
+                }
+            }
+            n = n>>1;
+        }
+        return true;
+    }
+};
+
+
+///(better way)
+
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if( n <= 0 ) return false;
+        int flag=0;
+        while(n){
+            if((n&1) == 1){
+                n = n>>1;
+                return n ? false:true;
+            }
+            n = n>>1;
+        }
+        return true;
+    }
+};

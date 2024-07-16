@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int bitwiseComplement(int n) {
+        if(n==0) return 1;
+        int mask = 0;           // mask = 0000000...000
+        int m = n ;
+        while(m){               // mask = 0000000...111 for 5
+            m = m>>1;
+            mask = mask<<1 | 1; //  add 1
+        }
+        return (~n&mask);       // 111...1010 & 0000...0111 => 0000.00010 
+    }
+};
