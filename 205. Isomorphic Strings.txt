@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        unordered_map<char, char> um1;
+        unordered_map<char, char> um2;
+        for(int i = 0;i<s.length();i++){
+            if(!um1[s[i]] && !um2[t[i]]){
+                um1[s[i]] = t[i];
+                um2[t[i]] = s[i];
+                continue;
+            }
+            if(um1[s[i]]!=t[i] && um2[t[i]]!=s[i]) return false;
+        }
+        return true;
+    }
+};

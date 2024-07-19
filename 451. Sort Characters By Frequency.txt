@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char, int> m;
+        for(char c : s) {
+            m[c]++;
+        }
+        
+        vector<pair<int, char>> freq;
+        for(auto j : m) {
+            freq.push_back({j.second, j.first});
+        }
+        
+        sort(freq.rbegin(), freq.rend());
+        
+        string result;
+        for(auto p : freq) {
+            result.append(p.first, p.second);
+        }
+        
+        return result;
+    }
+};
