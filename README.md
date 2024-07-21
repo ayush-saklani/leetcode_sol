@@ -2,8 +2,10 @@
 **Hey folks!** 👋 Welcome to my repository that houses solutions for the 30-day Winter DSA ❄️ + solutions from general problem solving coding challenge on LeetCode + DSA concept programs.
 
 ---
+<p align=left>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" height="100"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" height="100"/>
+</p>
 <!-- #### Question count : **44** *(15-02-2024)* -->
 
 
