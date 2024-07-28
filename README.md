@@ -5,6 +5,8 @@
 <p align=left>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" height="100"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" height="100"/>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLGnMqhnl05Dsn2sn0kQoq3Ch2TP9ebmmJsA&s" height="100" style="border-radius: 50%;"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/LeetCode_logo_white_no_text.svg" height="100"/>
 </p>
 <!-- #### Question count : **44** *(15-02-2024)* -->
 
