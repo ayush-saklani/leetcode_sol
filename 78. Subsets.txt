@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int> > res;
+        res.push_back({});
+        int counter = 1;
+        while(counter<(1<<(nums.size()))){
+            vector<int> temp;
+            for(int i=0;i<nums.size();i++){
+                if((counter&(1<<i))){
+                    temp.push_back(nums[i]);
+                }
+            }
+            res.push_back(temp);
+            counter++;
+        }
+        return res;
+    }
+};

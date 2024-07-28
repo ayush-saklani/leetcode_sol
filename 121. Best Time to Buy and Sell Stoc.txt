@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& nums) {
+        int max=nums[0],min=nums[0];
+        int res = 0;
+        for(int i =0 ;i<nums.size();i++){
+            res = ((nums[i]-min)>res) ? res = (nums[i]-min):res;
+            if(nums[i]<=min){
+                min = nums[i];
+            }
+        }
+        cout<<max<<" "<<min;
+        return res;
+    }
+};

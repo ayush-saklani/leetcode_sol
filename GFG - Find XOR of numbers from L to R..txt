@@ -1,0 +1,15 @@
+Find XOR of numbers from L to R.
+
+class Solution {
+  public:
+    int xorfunc(int r){
+        int xori = r%4;
+        if(xori==1) return 1;
+        if(xori==2) return r+1;
+        if(xori==3) return 0;
+        else return r;
+    }
+    int findXOR(int l, int r){
+        return xorfunc(l-1) ^xorfunc(r);
+    }
+};

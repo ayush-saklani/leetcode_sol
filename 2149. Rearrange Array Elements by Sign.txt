@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<int> rearrangeArray(vector<int>& nums) {
+        vector<int> res;
+        int min=0,max=0;
+        int n = nums.size();
+        while(1){
+            while(nums[min]>0){ 
+                min++;
+            }
+            while(nums[max]<0){ 
+                max++;
+            }
+            res.push_back(nums[max]);
+            res.push_back(nums[min]);
+            min++;
+            max++;
+            if(res.size()==n)  break;
+        }
+        return res;
+    }
+};
+
+//optimal solution of striver but almost same time and space complexity
+class Solution {
+public:
+    vector<int> rearrangeArray(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> res(n);
+        int ni=1,pi=0;
+        for(int i=0; i<n; i++){
+            if(nums[i]<0){
+                res[ni] = nums[i];
+                ni=ni+2;
+            }
+            else{
+                res[pi] = nums[i];
+                pi=pi+2;
+            }
+        }
+        return res;
+    }
+};
