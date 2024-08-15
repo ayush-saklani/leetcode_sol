@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool iskokovalid(vector<int>& piles, int k, int h){
+        int res = 0;
+        for(int i =0;i<piles.size();i++){
+            res = res + ceil((double)piles[i]/(double)k);
+            if(res>h) return false;
+        }
+        return true;
+    }
+    int minEatingSpeed(vector<int>& piles, int h) {
+        sort(piles.begin(),piles.end());
+        int n = piles.size();
+        int l = 1;
+        int r = piles[n-1];
+        while(l<r){
+            int mid = l + (r-l)/2;
+            if(iskokovalid(piles,mid,h)){
+                r = mid;
+            }
+            else{
+                l = mid+1;
+            }
+        }
+        return l;
+    }
+};
