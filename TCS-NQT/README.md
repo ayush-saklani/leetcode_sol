@@ -14,11 +14,11 @@ TCS NQT is an exam conducted by TCS (Tata Consultancy Services) to hire for the 
 5. **Problem on Strings**
 
 ## Problems on Arrays
-- [ ] 1. <a href="https://takeuforward.org/data-structure/find-the-smallest-element-in-an-array/">Find the smallest number in an array</a>
-- [ ] 2. <a href="https://takeuforward.org/data-structure/find-the-largest-element-in-an-array/">Find the largest number in an array</a>
-- [ ] 3. <a href="https://takeuforward.org/data-structure/find-second-smallest-and-second-largest-element-in-an-array/">Second Smallest and Second Largest element in an array</a> 
-- [ ] 4. <a href="https://takeuforward.org/data-structure/reverse-a-given-array/">Reverse a given array</a>
-- [ ] 5. <a href="https://takeuforward.org/data-structure/count-frequency-of-each-element-in-the-array/">Count frequency of each element in an array</a>
+- [x] 1. <a href="https://takeuforward.org/data-structure/find-the-smallest-element-in-an-array/">Find the smallest number in an array</a>
+- [x] 2. <a href="https://takeuforward.org/data-structure/find-the-largest-element-in-an-array/">Find the largest number in an array</a>
+- [x] 3. <a href="https://takeuforward.org/data-structure/find-second-smallest-and-second-largest-element-in-an-array/">Second Smallest and Second Largest element in an array</a> 
+- [x] 4. <a href="https://takeuforward.org/data-structure/reverse-a-given-array/">Reverse a given array</a>
+- [x] 5. <a href="https://takeuforward.org/data-structure/count-frequency-of-each-element-in-the-array/">Count frequency of each element in an array</a>
 - [ ] 6. <a href="https://takeuforward.org/data-structure/rearrange-array-in-increasing-decreasing-order/">Rearrange array in increasing-decreasing order</a>
 - [ ] 7. <a href="https://takeuforward.org/arrays/calculate-sum-of-the-elements-of-the-array/">Calculate sum of the elements of the array</a>
 - [ ] 8. <a href="https://takeuforward.org/data-structure/rotate-array-by-k-elements-block-swap-algorithm/">Rotate array by K elements - Block Swap Algorithm</a>
