@@ -19,10 +19,10 @@ TCS NQT is an exam conducted by TCS (Tata Consultancy Services) to hire for the 
 - [x] 3. <a href="https://takeuforward.org/data-structure/find-second-smallest-and-second-largest-element-in-an-array/">Second Smallest and Second Largest element in an array</a> 
 - [x] 4. <a href="https://takeuforward.org/data-structure/reverse-a-given-array/">Reverse a given array</a>
 - [x] 5. <a href="https://takeuforward.org/data-structure/count-frequency-of-each-element-in-the-array/">Count frequency of each element in an array</a>
-- [ ] 6. <a href="https://takeuforward.org/data-structure/rearrange-array-in-increasing-decreasing-order/">Rearrange array in increasing-decreasing order</a>
-- [ ] 7. <a href="https://takeuforward.org/arrays/calculate-sum-of-the-elements-of-the-array/">Calculate sum of the elements of the array</a>
-- [ ] 8. <a href="https://takeuforward.org/data-structure/rotate-array-by-k-elements-block-swap-algorithm/">Rotate array by K elements - Block Swap Algorithm</a>
-- [ ] 9. <a href="https://takeuforward.org/data-structure/average-of-all-the-elements-in-the-array/">Average of all elements in an array</a>
+- [x] 6. <a href="https://takeuforward.org/data-structure/rearrange-array-in-increasing-decreasing-order/">Rearrange array in increasing-decreasing order</a>
+- [x] 7. <a href="https://takeuforward.org/arrays/calculate-sum-of-the-elements-of-the-array/">Calculate sum of the elements of the array</a>
+- [x] 8. <a href="https://takeuforward.org/data-structure/rotate-array-by-k-elements-block-swap-algorithm/">Rotate array by K elements - Block Swap Algorithm</a>
+- [x] 9. <a href="https://takeuforward.org/data-structure/average-of-all-the-elements-in-the-array/">Average of all elements in an array</a>
 - [ ] 10. <a href="https://takeuforward.org/data-structure/find-median-of-the-given-array/">Find the median of the given array</a>
 - [ ] 11. <a href="https://takeuforward.org/data-structure/remove-duplicates-in-place-from-sorted-array/">Remove duplicates from a sorted array</a>
 - [ ] 12. <a href="https://takeuforward.org/data-structure/remove-duplicates-from-an-unsorted-array/">Remove duplicates from unsorted array</a>
