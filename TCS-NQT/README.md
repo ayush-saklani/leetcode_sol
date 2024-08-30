@@ -24,8 +24,8 @@ TCS NQT is an exam conducted by TCS (Tata Consultancy Services) to hire for the 
 - [x] 8. <a href="https://takeuforward.org/data-structure/rotate-array-by-k-elements-block-swap-algorithm/">Rotate array by K elements - Block Swap Algorithm</a>
 - [x] 9. <a href="https://takeuforward.org/data-structure/average-of-all-the-elements-in-the-array/">Average of all elements in an array</a>
 - [ ] 10. <a href="https://takeuforward.org/data-structure/find-median-of-the-given-array/">Find the median of the given array</a>
-- [ ] 11. <a href="https://takeuforward.org/data-structure/remove-duplicates-in-place-from-sorted-array/">Remove duplicates from a sorted array</a>
-- [ ] 12. <a href="https://takeuforward.org/data-structure/remove-duplicates-from-an-unsorted-array/">Remove duplicates from unsorted array</a>
+- [x] 11. <a href="https://takeuforward.org/data-structure/remove-duplicates-in-place-from-sorted-array/">Remove duplicates from a sorted array</a>
+- [x] 12. <a href="https://takeuforward.org/data-structure/remove-duplicates-from-an-unsorted-array/">Remove duplicates from unsorted array</a>
 - [ ] 13. <a href="https://takeuforward.org/data-structure/adding-element-in-an-array/">Adding Element in an array</a>
 - [ ] 14. <a href="https://takeuforward.org/data-structure/find-all-repeating-elements-in-an-array/">Find all repeating elements in an array</a>
 - [ ] 15. <a href="https://takeuforward.org/data-structure/find-all-the-non-repeating-elements-in-an-array/">Find all non-repeating elements in an array</a>
