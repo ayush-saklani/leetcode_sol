@@ -1,0 +1,63 @@
+// recursive approach 
+
+class Solution {
+public:
+    vector<int> d1 = {0, 1, 0, -1}; // for 4 direction
+    vector<int> d2 = {1, 0, -1, 0}; // for 4 direction
+    int bfs(vector<vector<int>>& grid, vector<vector<bool>>& visited, int i, int j, int m, int n) {
+        int res = 0;
+        visited[i][j] = true;
+        for (int it = 0; it < d1.size(); it++) {
+            int x = (i + d1[it]),y = (j + d2[it]);
+            if (x < 0 || x >= m || y < 0 || y >= n || (grid[x][y] == 0)) {
+                res ++;
+            }else if(!visited[x][y]){
+                res += bfs(grid, visited, (i + d1[it]), (j + d2[it]), m, n);
+            }
+        }
+        return res;
+    }
+    int islandPerimeter(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<bool>> visited(m, vector<bool>(n, false));
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    return bfs(grid, visited, i, j, m, n);
+                }
+            }
+        }
+        return 0;
+    }
+};
+
+
+
+
+
+// iterative approach 
+
+class Solution {
+public:
+    vector<int> d1 = {0, 1, 0, -1}; // for 4 direction
+    vector<int> d2 = {1, 0, -1, 0}; // for 4 direction
+    int islandPerimeter(vector<vector<int>>& grid) {
+        int res = 0;
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<bool>> visited(m, vector<bool>(n, false));
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    visited[i][j] = true;
+                    for (int it = 0; it < d1.size(); it++) {
+                        int x = (i + d1[it]),y = (j + d2[it]);
+                        if (x < 0 || x >= m || y < 0 || y >= n || (grid[x][y] == 0)) {
+                            res ++;
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
