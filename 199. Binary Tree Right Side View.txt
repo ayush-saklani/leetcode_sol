@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void side(TreeNode* root,int level,int& maxlevel,vector<int>& res ){
+        if(!root) return ;
+        if(level>maxlevel){
+            res.push_back(root->val);
+            maxlevel = level;
+        }
+        side(root->right,level+1,maxlevel,res);
+        side(root->left,level+1,maxlevel,res);
+    }
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> res;
+        int maxlevel = -1;
+        side(root,0,maxlevel,res);
+        return res; 
+    }
+};
