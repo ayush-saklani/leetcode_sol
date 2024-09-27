@@ -29,7 +29,18 @@ int main(){
             it=1;
         }
     }
-    cout<<res;
+    cout<<"Appraoch 1: "<<res<<endl;
+
+    // Another approach to solve the problem is: (Better approach)
+    res = 0;  // Result to hold total number of steps
+    it = 1;   // Current house starts from 1
+
+    for(int i = 0; i < m; i++) {
+        int targetHouse = a[i];             
+        res += (targetHouse - it + n) % n;
+        it = targetHouse;
+    }
+    cout<<"Appraoch 2: "<<res<<endl;
     return 0;
 }
 // Test case: 
