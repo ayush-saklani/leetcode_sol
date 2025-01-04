@@ -1,0 +1,84 @@
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if (!root){
+            return root;
+        }
+        if (key < root->val) {
+            root->left = deleteNode(root->left, key);
+        } else if (key > root->val) {
+            root->right = deleteNode(root->right, key);
+        } else {
+            if (!root->left && !root->right) {
+                // Case 1: Node is a leaf
+                delete root;
+                return NULL;
+            } else if (!root->left) {
+                // Case 2: Node has only right child
+                TreeNode* temp = root->right;
+                delete root;
+                return temp;
+            } else if (!root->right) {
+                // Case 2: Node has only left child
+                TreeNode* temp = root->left;
+                delete root;
+                return temp;
+            } else {
+                // Case 3: Node has two children
+                TreeNode* successor = root->right;
+                while (successor->left) {
+                    successor = successor->left;
+                }
+                root->val = successor->val;
+                root->right = deleteNode(root->right, successor->val);
+            }
+        }
+        return root;
+    }
+};
+
+
+
+///////////////////////////////////////////////////////////////////////////
+my personal favorite iterative approach 
+
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        TreeNode* parent = NULL;
+        TreeNode* current = root;
+        while (current && current->val != key) {
+            parent = current;
+            if (key < current->val) {
+                current = current->left;
+            } else {
+                current = current->right;
+            }
+        }
+        if (!current) return root; 
+        if (!current->left && !current->right) {
+            if (!parent) return NULL; ji
+            if (parent->left == current) parent->left = NULL;
+            else parent->right = NULL;
+            delete current;
+        } else if (!current->left || !current->right) {
+            TreeNode* child = current->left ? current->left : current->right;
+            if (!parent) return child;
+            if (parent->left == current) parent->left = child;
+            else parent->right = child;
+            delete current;
+        } else {
+            TreeNode* successorParent = current;
+            TreeNode* successor = current->right;
+            while (successor->left) {
+                successorParent = successor;
+                successor = successor->left;
+            }
+            current->val = successor->val;
+            if (successorParent->left == successor) successorParent->left = successor->right;
+            else successorParent->right = successor->right;
+            delete successor;
+        }
+        return root;
+    }
+};
