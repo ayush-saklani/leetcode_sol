@@ -1,0 +1,21 @@
+class Solution{
+
+public:
+    int floor(Node* root, int input) {
+    if (root == NULL) return -1;
+
+    int ceil = -1; // Initialize ceil as -1
+    while (root) {
+        if (root->data == input) {
+            return root->data; // Exact match found
+        } else if (root->data > input) {
+            root = root->left;  // Explore left subtree for closer value
+        } else {
+            ceil = root->data;  // Potential ceil found
+            root = root->right; // Explore right subtree
+        }
+    }
+    return ceil;
+}
+
+};
