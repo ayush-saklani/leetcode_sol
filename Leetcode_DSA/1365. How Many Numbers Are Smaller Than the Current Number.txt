@@ -1,0 +1,35 @@
+// O(n*n) because of nested loops
+class Solution {
+public:
+    vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> res(n,0);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if(nums[i] > nums[j]){
+                    res[i]++;
+                }
+            }
+        }
+        return res;
+    }
+};
+
+// O(nlogn) because of sorting function
+class Solution {
+public:
+    vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> res(n, 0);
+        unordered_map<int, int> map;
+        vector<int> numcopy = nums;
+        sort(nums.begin(), nums.end());
+        for (int i = n - 1; i >= 0; i--) {
+            map[nums[i]] = i;
+        }
+        for (int i = 0; i < n; i++) {
+            res[i] = map[numcopy[i]];
+        }
+        return res;
+    }
+};

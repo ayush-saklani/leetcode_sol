@@ -20,3 +20,52 @@ public:
         return nums;
     }
 };
+
+// Best approach O(n)
+// find the mid point that is >=0 
+// then 2 pointers to get the values in acceding or descending  
+
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        vector<int> res;
+        int n = nums.size();
+        int mid = 0;
+        int l = mid;
+        int r = mid + 1;
+        if (nums[n - 1] < 0) {
+            mid = n - 1;
+            r = n;
+            l = n - 1;
+        } else {
+            for (int i = 0; i < n; i++) {
+                if (nums[i] >= 0) {
+                    mid = i;
+                    r = mid;
+                    l = mid - 1;
+                    break;
+                }
+            }
+        }
+        while (l >= 0 && r < n) {
+            if (abs(nums[l]) < nums[r]) {
+                res.push_back(nums[l] * nums[l]);
+                l--;
+            } else {
+                res.push_back(nums[r] * nums[r]);
+                r++;
+            }
+        }
+        while (l >= 0) {
+            res.push_back(nums[l] * nums[l]);
+            l--;
+        }
+        while (r < n) {
+            res.push_back(nums[r] * nums[r]);
+            r++;
+        }
+        
+
+        return res;
+    }
+};
