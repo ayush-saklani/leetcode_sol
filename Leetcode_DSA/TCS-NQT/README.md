@@ -45,7 +45,7 @@ TCS NQT is an exam conducted by TCS (Tata Consultancy Services) to hire for the 
 - [ ] 2. <a href="https://takeuforward.org/data-structure/find-all-palindrome-numbers-in-a-given-range/">Find all Palindrome numbers in a given range</a>
 - [ ] 3. <a href="https://takeuforward.org/data-structure/check-if-a-number-is-prime-or-not/">Check if a number is prime or not</a>
 - [ ] 4. <a href="https://takeuforward.org/data-structure/prime-numbers-in-a-given-range/">Prime numbers in a given range</a>
-- [ ] 5. <a href="https://takeuforward.org/maths/check-if-a-number-is-armstrong-number-or-not/">Check if a number is armstrong number of not</a>
+- [ ] 5. <a href="https://takeuforward.org/maths/check-if-a-number-is-armstrong-number-or-not/">Check if a number is Armstrong number of not</a>
 - [ ] 6. <a href="https://takeuforward.org/data-structure/check-whether-a-number-is-perfect-number-or-not/">Check if a number is perfect number</a>
 - [ ] 7. <a href="https://takeuforward.org/arrays/check-whether-a-given-number-is-even-or-odd/">Even or Odd</a>
 - [ ] 8. <a href="https://takeuforward.org/data-structure/check-whether-a-number-is-positive-or-negative/">Check weather a given number is positive or negative</a>
@@ -57,7 +57,7 @@ TCS NQT is an exam conducted by TCS (Tata Consultancy Services) to hire for the 
 - [ ] 14. <a href="https://takeuforward.org/data-structure/check-if-given-year-is-a-leap-year-or-not/">Leap Year or not</a>
 - [ ] 15. <a href="https://takeuforward.org/data-structure/reverse-digits-of-a-number/">Reverse digits of a number</a>
 - [ ] 16. <a href="https://takeuforward.org/data-structure/maximum-and-minimum-digit-in-a-number/">Maximum and Minimum digit in a number</a>
-- [ ] 17. <a href="https://takeuforward.org/arrays/print-fibonacci-series-up-to-nth-term/">Print Fibonacci upto Nth Term</a>
+- [ ] 17. <a href="https://takeuforward.org/arrays/print-fibonacci-series-up-to-nth-term/">Print Fibonacci up to Nth Term</a>
 - [ ] 18. <a href="https://takeuforward.org/data-structure/factorial-of-a-number-iterative-and-recursive/">Factorial of a  </a>
 - [ ] 19. <a href="https://takeuforward.org/data-structure/calculate-the-power-of-a-number-binary-exponentiation/" >Power of a number</a>
 - [ ] 20. <a href="https://takeuforward.org/combinatorics/factors-of-a-given-number/">Factors of a given number</a>
