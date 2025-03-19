@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int n = chars.size();
+        if (n == 1)
+            return 1;
+        int res = 0;
+        vector<char> temp;
+        for (int i = 0; i < n - 1; i++) {
+            int count = 1;
+            temp.push_back(chars[i]);
+            while (i < n - 1 && chars[i] == chars[i + 1]) {
+                count++;
+                i++;
+            }
+            if (count > 1 && count < 10) {
+                temp.push_back(count + '0'); // convert int to char
+            } else if (count >= 10) {
+                vector<char> xx;
+                while (count > 0) {
+                    xx.push_back(count % 10 + '0');
+                    count = count / 10;
+                }
+                temp.insert(temp.end(), xx.rbegin(), xx.rend());
+            }
+        }
+        if (n >= 2 && chars[n - 1] != chars[n - 2]) {
+            temp.push_back(chars[n - 1]);
+        }
+        chars = temp;
+        return temp.size();
+    }
+};
