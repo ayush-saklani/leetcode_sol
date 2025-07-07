@@ -1,0 +1,61 @@
+class Solution {
+public:
+    void bfs(vector<vector<int>>& heights, queue<pair<int, int>>& q,
+             vector<vector<int>>& ocean, int m, int n) {
+        vector<vector<int>> directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        while (!q.empty()) {
+            auto [x, y] = q.front();
+            q.pop();
+
+            for (auto& d : directions) {
+                int nx = x + d[0], ny = y + d[1];
+                if (nx >= 0 && ny >= 0 && nx < m && ny < n &&
+                    heights[nx][ny] >= heights[x][y] && !ocean[nx][ny]) {
+                    ocean[nx][ny] = 1;
+                    q.push({nx, ny});
+                }
+            }
+        }
+    };
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        int m = heights.size();
+        int n = heights[0].size();
+
+        vector<vector<int>> pacific(m, vector<int>(n, 0));
+        vector<vector<int>> atlantic(m, vector<int>(n, 0));
+
+        queue<pair<int, int>> qp, qa;
+
+        for (int i = 0; i < n; i++) {
+            // Pacific (top)
+            qp.push({0, i});
+            pacific[0][i] = 1;
+
+            // Atlantic (bottom)
+            qa.push({m - 1, i});
+            atlantic[m - 1][i] = 1;
+        }
+        for (int i = 0; i < m; i++) {
+            // Pacific (left)
+            qp.push({i, 0});
+            pacific[i][0] = 1;
+
+            // Atlantic (right)
+            qa.push({i, n - 1});
+            atlantic[i][n - 1] = 1;
+        }
+
+        bfs(heights, qp, pacific, m, n);
+        bfs(heights, qa, atlantic, m, n);
+
+        vector<vector<int>> res;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (pacific[i][j] && atlantic[i][j])
+                    res.push_back({i, j});
+            }
+        }
+
+        return res;
+    }
+};
