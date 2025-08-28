@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        int m = board.size(), n = board[0].size();
+        vector<unordered_map<char, bool>> row(9);
+        vector<unordered_map<char, bool>> col(9);
+        vector<unordered_map<char, bool>> sub(9);
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] == '.')  continue;
+                int sub_board = (i/3)*3 + j/3;
+                if (row[i].count(board[i][j]) || col[j].count(board[i][j]) || sub[sub_board].count(board[i][j]))
+                    return false;
+                row[i][board[i][j]] = true;
+                col[j][board[i][j]] = true;
+                sub[sub_board][board[i][j]] = true;
+            }
+        }
+        return true;
+    }
+};
