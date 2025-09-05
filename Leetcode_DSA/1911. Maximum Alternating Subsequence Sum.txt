@@ -1,24 +1,26 @@
 class Solution {
 public:
-    unordered_map<long,long> dp;
+    vector<vector<long>> dp;
     long long solve(vector<int>& nums,int i,int pi){
         int n = nums.size();
         if(i>=n) return 0;
 
-        long long key = (pi%2 == 0)? i : i*-1;
-        if (dp.count(key)) return dp[key];
+        int x = (pi%2 == 0)?0:1;
+        if (dp[i][x] != -1) return dp[i][x];
         
         long long skip = solve(nums,i+1,pi);
         long long take = solve(nums,i+1,pi+1);
-        if(pi%2 == 0){
+        if(!x){     //even hai index toh
             take = take + nums[i];
         }else{
             take = take - nums[i];
         }
-        return dp[key] = max(skip,take);
+        long long res = max(skip,take);
 
+        return dp[i][x] = res;
     }
     long long maxAlternatingSum(vector<int>& nums) {
+        dp.assign(nums.size(),{-1,-1});
         return solve(nums,0,0);
     }
 };
