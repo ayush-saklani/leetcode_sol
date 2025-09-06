@@ -1,0 +1,124 @@
+// There are 4 methods written here
+// 1> bottom up
+// 2> top down full memoization
+// 3> top down half memoization (fast and better then full)
+// 4> Binary search (fastest) (lazy sort)
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n, 1);
+
+        int res = 1;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = max(dp[i], dp[j] + 1);
+                }
+            }
+            res = max(res, dp[i]);
+        }
+        return res;
+    }
+};
+// 2> below approach is Classic DP with top-down recursive approach and this
+// take a lot of time and space class Solution { public:
+//     vector<vector<int>> dp;
+//     int solve(vector<int>& nums, int i, int compareidx) {
+//         if (i >= nums.size()) {
+//             return 0;
+//         }
+//         if(compareidx >= 0 && dp[i][compareidx] !=-1) return
+//         dp[i][compareidx] ; int count = 0, skip = 0; if (compareidx == -1 ||
+//         nums[i] > nums[compareidx]) {
+//             count = 1 + solve(nums, i + 1, i);
+//             skip = solve(nums, i + 1, compareidx);
+//         } else {
+//             skip = solve(nums, i + 1, compareidx);
+//         }
+//         int res = max(count, skip);
+//         if(compareidx != -1){
+//             dp[i][compareidx] = res;
+//         }
+//         return res;
+//     }
+//     int lengthOfLIS(vector<int>& nums) {
+//         int n = nums.size();
+//         dp.assign(n, vector<int>(n,-1));
+//         return solve(nums, 0, -1);
+//     }
+// };
+//
+// 3> just below is the half memoization code which is faster than full
+// memoization and take 5% of storage in comparision class Solution { public:
+//     vector<int> dp;
+//     int solve(vector<int>& nums, int i, int compareidx) {
+//         if (i >= nums.size()) {
+//             return 0;
+//         }
+//         int count = 0, skip = 0;
+//         if (compareidx == -1 || nums[i] > nums[compareidx]) {
+//             if (dp[i] != -1) {
+//                 count = dp[i];
+//             }else{
+//                 count = 1 + solve(nums, i + 1, i);
+//                 dp[i] = count;
+//             }
+//             skip = solve(nums, i + 1, compareidx);
+//         } else {
+//             skip = solve(nums, i + 1, compareidx);
+//         }
+//         return max(count, skip);
+//     }
+//     int lengthOfLIS(vector<int>& nums) {
+//         int n = nums.size();
+//         dp.assign(n, -1);
+//         return solve(nums, 0, -1);
+//     }
+// };
+
+// 4> below code is binary search technique that just very fast
+// nums = [10, 2, 5, 3, 7, 101]
+
+// Step	n	Action	                    res
+// 1	10	res empty → push	        [10]
+// 3	2	replace idx=0	            [2]
+// 4	5	res.back()<5 → push	        [2, 5]
+// 5	3	replace idx=1	            [2, 3]
+// 6	7	res.back()<7 → push	        [2, 3, 7]
+// 7	101	res.back()<101 → push	    [2, 3, 7, 101]
+
+// class Solution {
+// public:
+//  int binarySearch(const vector<int>& arr, int target) {
+//         int left = 0;
+//         int right = arr.size() - 1;
+
+//         while (left <= right) {
+//             int mid = (left + right) / 2;
+//             if (arr[mid] == target) {
+//                 return mid;
+//             } else if (arr[mid] > target) {
+//                 right = mid - 1;
+//             } else {
+//                 left = mid + 1;
+//             }
+//         }
+
+//         return left;
+//     }
+//     int lengthOfLIS(vector<int>& nums) {
+//         vector<int> res;
+
+//         for (int n : nums) {
+//             if (res.empty() || res.back() < n) {
+//                 res.push_back(n);
+//             } else {
+//                 int idx = binarySearch(res, n);
+//                 res[idx] = n;
+//             }
+//         }
+
+//         return res.size();
+//     }
+// };
