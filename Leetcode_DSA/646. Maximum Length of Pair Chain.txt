@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int findLongestChain2(vector<vector<int>>& pairs) {
+        int n = pairs.size();
+        vector<int> dp(n, 1);
+        sort(pairs.begin(), pairs.end()); // sort on the basis of first element 
+
+        int res = 1;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j <= i; j++) {
+                if (pairs[j][1] < pairs[i][0]) {
+                    dp[i] = max(dp[i], dp[j] + 1);
+                }
+            }
+            res = max(res, dp[i]);
+        }
+        return res;
+    }
+
+    // tried lazy sorting but i dont think its quite possible but greedy can (fastest)
+    int findLongestChain(vector<vector<int>>& pairs) {
+        sort(pairs.begin(), pairs.end());
+        int count = 0;
+        int n = pairs.size();
+        int lastFace = INT_MAX;
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (pairs[i][1] < lastFace) {
+                count++;
+                lastFace = pairs[i][0];
+            }
+        }
+
+        return count;
+    }
+};

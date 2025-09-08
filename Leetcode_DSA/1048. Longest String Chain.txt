@@ -1,0 +1,35 @@
+class Solution {
+public:
+    // this compare a, b string and passes them if a, b are equal and b contain 1 character extra
+    // e.g [ ab => (abc adb)] 
+    bool comparestri(string a, string b) {
+        int n = a.size(); // assuming a<b
+        int kick = 0;
+        for (int i = 0; i < n; i++) {
+            if (kick > 1)
+                return false;
+            if (a[i] != b[i + kick]) {
+                kick++;
+                i--;
+            }
+        }
+        return true;
+    }
+    int longestStrChain(vector<string>& words) {
+        sort(words.begin(), words.end(),
+             [](string& a, string& b) { return a.length() < b.length(); });
+        int n = words.size();
+        vector<int> dp(n, 1);
+        int res = 1;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                // if b is 5 so check in only 4 length strings
+                if (words[j].size() + 1 == words[i].size() && comparestri(words[j], words[i])) {
+                    dp[i] = max(dp[i], dp[j] + 1);
+                }
+            }
+            res = max(res, dp[i]);
+        }
+        return res;
+    }
+};
