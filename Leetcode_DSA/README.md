@@ -17,8 +17,6 @@
 
 - **Best Approaches**: Some solutions include the best-known approaches to the questions. It's always good to compare and learn from different perspectives.
 
-<!-- - **Excel Sheets**: Look out for the Excel sheets! I'll be sharing 30-day roadmap tailored for both beginners and advanced coders . -->
-
 ## Why Follow?
 
 Coding is a journey,  and this repository is a glimpse into mine. Let's learn, grow, and have fun coding together! and who knows it might end up helping you 😄
