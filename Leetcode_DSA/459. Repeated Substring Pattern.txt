@@ -1,0 +1,10 @@
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        string t = s + s;
+        return t.substr(1, t.size() - 2).find(s) != -1;
+    }
+};
+//
+// abab => abababab => bababa => b[abab]a => true
+// aba->abaaba->baab-> no match inside->false
