@@ -1,0 +1,90 @@
+class Solution {
+public:
+    void bfs(vector<vector<int>>& isConnected, vector<int>& visited, int index) {
+        queue<int> q;
+        q.push(index);
+        visited[index] = 1;
+        while (!q.empty()) {
+            int front = q.front();
+            q.pop();
+            for (int i = 0; i < isConnected[front].size(); i++) {
+                if (isConnected[front][i] == 1 && visited[i] == 0) {
+                    visited[i] = 1;
+                    q.push(i);
+                }
+            }
+        }
+    }    
+     void dfs(vector<vector<int>>& isConnected, vector<int>& visited, int index) {
+        stack<int> st;
+        st.push(index);
+        visited[index] = 1;
+        while (!st.empty()) {
+            int front = st.top();
+            st.pop();
+            for (int i = 0; i < isConnected[front].size(); i++) {
+                if (isConnected[front][i] == 1 && visited[i] == 0) {
+                    visited[i] = 1;
+                    st.push(i);
+                }
+            }
+        }
+    }    
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        vector<int> visited(n, 0);
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                res++;
+                // bfs(isConnected, visited, i); 
+                dfs(isConnected, visited, i); 
+            }
+        }
+        return res;
+    }
+};
+
+
+
+
+/// same thing with adjacency list
+class Solution {
+public:
+    void bfs(unordered_map<int, vector<int>>& gp, vector<int>& visited,
+             int index) {
+        queue<int> q;
+        visited[index] = 1;
+        q.push(index);
+        while (!q.empty()) {
+            int front = q.front();
+            q.pop();
+            for (int& i : gp[front]) {
+                if (visited[i] == 0) {
+                    visited[i] = 1;
+                    q.push(i);
+                }
+            }
+        }
+    }
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+        unordered_map<int, vector<int>> gp;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (isConnected[i][j] == 1 && i != j) {
+                    gp[i].push_back(j);
+                }
+            }
+        }
+        vector<int> visited(n, 0);
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                res++;
+                bfs(gp, visited, i);
+            }
+        }
+        return res;
+    }
+};
