@@ -1,0 +1,74 @@
+class Solution {
+public:
+    // this one using dfs
+    bool dfs_helper(unordered_map<int, vector<int>>& g, vector<int>& res, vector<int>& visited, int index) {
+        if (visited[index] == 1)    return false;
+        if (visited[index] == 2)    return true;
+        visited[index] = 1;
+        for (int v : g[index]) {
+            if (!dfs_helper(g, res, visited, v)) {
+                return false;
+            }
+        }
+        visited[index] = 2;
+        res.push_back(index);
+        return true;
+    }
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        unordered_map<int, vector<int>> g;
+        for (int i = 0; i < prerequisites.size(); i++) {
+            int course = prerequisites[i][0];
+            int prereq = prerequisites[i][1];
+            g[prereq].push_back(course);
+        }
+        vector<int> res;
+        vector<int> visited(numCourses, 0);
+
+        for (int i = 0; i < numCourses; i++) {
+            if (visited[i] == 0) {
+                if (!dfs_helper(g, res, visited, i)) {
+                    return {};
+                }
+            }
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+
+
+    // this one using bfs or (kahn algo)
+    vector<int> findOrder2(int numCourses, vector<vector<int>>& prerequisites) {
+        unordered_map<int, vector<int>> g;
+        vector<int> indegree(numCourses, 0);
+        for (int i = 0; i < prerequisites.size(); i++) {
+            int course = prerequisites[i][0];
+            int prereq = prerequisites[i][1];
+            indegree[course]++;
+            g[prereq].push_back(course);
+        }
+        queue<int> q;
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0) {
+                q.push(i);
+            }
+        }
+        vector<int> res;
+        while (!q.empty()) {
+            int front = q.front();
+            q.pop();
+            res.push_back(front);
+
+            for (int& it : g[front]) {
+                indegree[it]--;
+                if (indegree[it] == 0) {
+                    q.push(it);
+                }
+            }
+        }
+        if (numCourses != res.size())
+            return {};
+
+        return res;
+    }
+};
+// basically find topological sort of graph

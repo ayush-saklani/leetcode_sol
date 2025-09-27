@@ -1,3 +1,49 @@
+// using dfs (uses inrecursion array)
+class Solution {
+public:
+    bool dfschecker(unordered_map<int, vector<int>>& gp, vector<int>& visited, int index, vector<bool>& inrecursion) {
+        if (inrecursion[index] == true) { // isi recursion cycle pe yaha aya tha mei pehle matlab (cycle hai)
+            return false;
+        }
+        if (visited[index] == 1) { // yaha pe pehle kisi recursion mei aa chuke the par isse aage nahi gaye matlab cycle nahi hai  
+            return true;
+        }
+        visited[index] = 1;
+        inrecursion[index] = true;
+
+        for (int v = 0; v < gp[index].size(); v++) {
+            if (!dfschecker(gp, visited, gp[index][v], inrecursion)) {
+                return false;
+            }
+        }
+        inrecursion[index] = false;
+        return true;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        unordered_map<int, vector<int>> gp;
+
+        for (auto& pre : prerequisites) {
+            int course = pre[0];
+            int prereq = pre[1];
+            gp[prereq].push_back(course);
+        }
+
+        vector<bool> inrecursion(numCourses, false);
+        vector<int> visited(numCourses, 0);
+
+        for (int i = 0; i < numCourses; i++) {
+            if (visited[i] == 0) {
+                if (!dfschecker(gp, visited, i, inrecursion)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
+
+
+// using kahn algo or bfs
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
@@ -35,3 +81,8 @@ public:
         return taken == numCourses;
     }
 };
+// this is kahn algo
+// this is used to find toplogical sorting in DAG using bfs
+// if topological sort has interupted then it has detected cycle
+// it use indegree with bfs and only node with indegree 0 are put in the
+// queue
