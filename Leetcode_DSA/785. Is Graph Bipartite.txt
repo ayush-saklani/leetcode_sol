@@ -1,0 +1,50 @@
+class Solution {
+public:
+    bool bfshelper(vector<vector<int>>& graph, vector<int>& color, int currcolor, int index) {
+        color[index] = currcolor;
+        queue<int> q;
+        q.push(index);
+        while (!q.empty()) {
+            int n = q.size();
+            while (n) {
+                int front = q.front();
+                for (int v : graph[front]) {
+                    if (color[v] == currcolor) {
+                        return false;
+                    } else if (color[v] == -1) {
+                        color[v] = 1 - currcolor;
+                        q.push(v);
+                    }
+                }
+                q.pop();
+                n--;
+            }
+            currcolor = 1 - currcolor;
+        }
+        return true;
+    }
+    bool dfshelper(vector<vector<int>>& graph, vector<int>& color, int currcolor, int index) {
+        color[index] = currcolor;
+        for (int v : graph[index]) {
+            if (color[v] == currcolor) {
+                return false;
+            }
+            else if (color[v] == -1 && !dfshelper(graph, color, 1 - currcolor, v)) {
+                return false;
+            }
+        }
+        currcolor = 1 - currcolor;
+        return true;
+    }
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<int> color(n, -1);
+        for (int i = 0; i < n; i++) {
+            // if (color[i] == -1 && !bfshelper(graph, color, 1, i)) {
+            if (color[i] == -1 && !dfshelper(graph, color, 1, i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
