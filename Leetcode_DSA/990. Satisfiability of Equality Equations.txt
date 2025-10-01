@@ -36,6 +36,7 @@ public:
 
         for (auto& eq : equations) {        // Step 2: check all "!=" pairs
             if (eq[1] == '!') {
+                // gives ascii value of character
                 int a = eq[0] - 'a';
                 int b = eq[3] - 'a';
                 if (find(a) == find(b)) return false;

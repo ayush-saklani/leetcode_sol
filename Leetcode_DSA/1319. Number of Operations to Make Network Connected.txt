@@ -1,0 +1,56 @@
+class Solution {
+public:
+    int find(int i, vector<int>& parent) {
+        if (i == parent[i]) {
+            return i;
+        }
+        int finder = find(parent[i], parent);
+        return parent[i] = finder;
+    }
+    void unionx(int x, int y, vector<int>& parent, vector<int>& rank) {
+        int x_par = find(x, parent);
+        int y_par = find(y, parent);
+        if (x_par != y_par) {
+            if (rank[x_par] > rank[y_par]) {
+                parent[y_par] = x_par;
+            } else if (rank[x_par] < rank[y_par]) {
+                parent[x_par] = y_par;
+            } else {
+                parent[y_par] = x_par;
+                rank[x_par]++;
+            }
+        }
+    }
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        if (connections.size() < n - 1) {
+            return -1;
+        }
+
+        vector<int> parent(n, 0);
+        vector<int> rank(n, 0);
+
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+        for (auto& edge : connections) {
+            unionx(edge[0], edge[1], parent, rank);
+        }
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (parent[i] == i) {
+                count++;
+            }
+        }
+        return count - 1; // cuz one is root node which would be its own parent but reset are disconnected from network
+        // we know ki e.g 4 computer ke liye 3 cable chahiye and we have 3 or more cable (line 25 check statement)
+        // so we calculate how many disconnected computer are therre and knowing we have enought cable we can say that,
+        // that number of cable can extract and reconnected  
+    }
+};
+// another approach for this is bfs 
+// bfs lagao no of island nikalo and then return island-1 cables e.g
+//          1-2    4-5   
+//          |/     | |
+//          3      6-7
+// we have 7 connection and 7 nodes (required is 6 min) so yes we can connect all computer 
+// no of island are 2 (using bfs) so we need 2-1 = 1 cable to connect all computer together (it can be taken from anywhere)
