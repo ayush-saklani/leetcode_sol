@@ -1,0 +1,126 @@
+class Solution {
+public:
+    long long res = 0;
+    int find(int i, vector<int>& parent) {
+        if (i == parent[i]) {
+            return i;
+        }
+        int finder = find(parent[i], parent);
+        return parent[i] = finder;
+    }
+    void unionx(int x, int y, vector<int>& parent, vector<int>& rank) {
+        int x_par = find(x, parent);
+        int y_par = find(y, parent);
+        if (x_par != y_par) {
+            if (rank[x_par] > rank[y_par]) {
+                parent[y_par] = x_par;
+                rank[x_par] += rank[y_par];
+                rank[y_par] = 0;
+            } else if (rank[x_par] < rank[y_par]) {
+                parent[x_par] = y_par;
+                rank[y_par] += rank[x_par];
+                rank[x_par] = 0;
+            } else {
+                parent[y_par] = x_par;
+                rank[x_par] += rank[y_par];
+                rank[y_par] = 0;
+            }
+        }
+    }
+    long long countPairs(int n, vector<vector<int>>& edges) {
+        vector<int> parent(n, 0);
+        vector<int> rank(n, 1);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+        for (auto& edge : edges) {
+            unionx(edge[0], edge[1], parent, rank);
+        }
+        int psize = n;
+        for (int i = 0; i < n; i++) {
+            if (rank[i] != 0) {
+                res = res + (rank[i] * (long long)(psize - rank[i]));
+                psize = psize - rank[i];
+            }
+        }
+        return res;
+    }
+};
+// modified union function rank feature (no change in rank if rank difference and increase by one if same)
+// basically if 2 node are union then there rank are shifted 
+
+// just calculate no of node in each island and then do this
+// example for test case 2
+// 0,2,5,4 -> every node in this is not connected to (7-4)=>3 nodes
+// and then 1,6 -> (3-2) => 1 node
+// and then 3 -> (1-1) -> 0 node so total 14 unreachable
+
+
+
+
+// bfs & dfs approach (bad)
+class Solution {
+public:
+    void bfshelper(unordered_map<int, vector<int>>& g, vector<int>& visited,
+                   int index, vector<int>& temp) {
+        int res = 1;
+        queue<int> q;
+        q.push(index);
+        visited[index] = 1;
+        while (!q.empty()) {
+            int front = q.front();
+            q.pop();
+            for (auto i : g[front]) {
+                if (visited[i] == 0) {
+                    q.push(i);
+                    visited[i] = 1;
+                    res++;
+                }
+            }
+        }
+        temp.push_back(res);
+    }
+    void dfshelper(unordered_map<int, vector<int>>& g, vector<int>& visited, int index, int &count) {
+        visited[index] = 1;
+        count++;
+        for (int nei : g[index]) {
+            if (!visited[nei]) {
+                dfshelper(g, visited, nei, count);
+            }
+        }
+    }
+    long long countPairs(int n, vector<vector<int>>& edges) {
+        vector<int> visited(n, 0);
+        unordered_map<int, vector<int>> g;
+
+        for (auto i : edges) {
+            g[i[0]].push_back(i[1]);
+            g[i[1]].push_back(i[0]);
+        }
+        vector<int> temp;
+
+        //bfs
+        // for (int i = 0; i < n; i++) {
+        //     if (visited[i] == 0) {
+        //         bfshelper(g, visited, i, temp);
+        //     }
+        // }
+       
+        //dfs
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                int count = 0;
+                dfshelper(g, visited, i, count);
+                temp.push_back(count);
+            }
+        }
+
+        long long res2 = 0;
+        long long psize = n;
+        for (int sz : temp) {
+            res2 += (sz * (long long)(psize - sz));
+            psize -= sz;
+        }
+        return res2;
+    }
+};
