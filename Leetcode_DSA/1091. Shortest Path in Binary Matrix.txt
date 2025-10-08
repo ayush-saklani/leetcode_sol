@@ -1,0 +1,61 @@
+class Solution {
+public: 
+    // BFS (better as weight are same)
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int dir_x[] = { 1, 1, 1, 0, 0, -1, -1, -1 };
+        int dir_y[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+        int n = grid.size();
+        if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) {
+            return -1;
+        }
+
+        vector<vector<int>> visited(n, vector<int>(n, -1));
+        queue<vector<int>> q;   // x,y,length
+        q.push({0, 0, 1}); // x,y,length
+        visited[0][0] = 1;
+        while (!q.empty()) {
+            vector<int> top = q.front();
+            q.pop();
+            int len = top[2];
+            for (int i = 0; i < 8; i++) {
+                int x = top[0] + dir_x[i];
+                int y = top[1] + dir_y[i];
+                if (x >= 0 && x < n && y >= 0 && y < n && grid[x][y] == 0 && visited[x][y] == -1) {
+                    visited[x][y] = len + 1;
+                    q.push({x, y, len + 1});
+                }
+            }
+        }
+        return visited[n - 1][n - 1];
+    }
+    // Dijkstra algorithm (just for practice )
+    int shortestPathBinaryMatrix2(vector<vector<int>>& grid) {
+        int dir_x[] = { 1, 1, 1, 0, 0, -1, -1, -1 };
+        int dir_y[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+        int n = grid.size();
+        if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) {
+            return -1;
+        }
+        priority_queue<vector<int>,vector<vector<int>>, greater<vector<int>>> pq;   // length,x,y
+        
+        vector<vector<int>> res(n, vector<int>(n, -1));
+        pq.push({1, 0, 0}); // length,x,y
+        res[0][0] = 1;
+        while (!pq.empty()) {
+            vector<int> top = pq.top();
+            pq.pop();
+            int len = top[0];
+            for (int i = 0; i < 8; i++) {
+                int x = top[1] + dir_x[i];
+                int y = top[2] + dir_y[i];
+                if (x >= 0 && x < n && y >= 0 && y < n && grid[x][y] == 0 &&
+                    (res[x][y] == -1 || res[x][y]> len + 1)) {
+                    
+                    res[x][y] = len + 1;
+                    pq.push({len + 1,x, y });
+                }
+            }
+        }
+        return res[n - 1][n - 1];
+    }
+};
