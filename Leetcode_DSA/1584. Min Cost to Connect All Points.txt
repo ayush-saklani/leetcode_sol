@@ -1,0 +1,66 @@
+class Solution {
+public:
+    int minCostConnectPoints(vector<vector<int>>& points) {
+        int v = points.size();
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+        // {cost,node}
+        vector<bool> visited(v, false);
+        pq.push({0, 0});
+        int res = 0;
+        while (!pq.empty()) {
+            auto top = pq.top();
+            pq.pop();
+
+            int cost = top.first, node = top.second;
+            if (visited[node]) continue;    // already visited node
+
+            visited[node] = true;
+
+            res = res + cost;
+            for (int i = 0; i < v; i++) {
+                if (i != node && !visited[i]) {
+                    int dis = abs(points[i][0] - points[node][0]) + abs(points[i][1] - points[node][1]);
+                    pq.push({dis, i});
+                }
+            }
+        }
+        return res;
+    }
+};
+// below code is example of how prims algo works
+// i have maintained parent array to return mst but it is not needed in this question 
+// parent in pq is also not required
+// but it is failing in time so above code is free from clutter and is fast
+
+// class Solution {
+// public:
+//     int minCostConnectPoints(vector<vector<int>>& points) {
+//         int v = points.size();
+//         priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
+//         // {cost,node,parent}
+//         vector<bool> visited(v, false);
+//         vector<int> parent(v, -1);
+//         pq.push({0, 0, -1});
+//         int res = 0;
+//         while (!pq.empty()) {
+//             auto top = pq.top();
+//             pq.pop();
+
+//             int cost = top[0], node = top[1], par = top[2];
+//             if (visited[node]) continue;    // already visited node
+
+//             visited[node] = true;
+//             parent[node] = par;
+
+//             res = res + cost;
+//             for (int i = 0; i < v; i++) {
+//                 if (i != node && !visited[i]) {
+//                     int dis = abs(points[i][0] - points[node][0]) +
+//                             abs(points[i][1] - points[node][1]);
+//                     pq.push({dis, i, node});
+//                 }
+//             }
+//         }
+//         return res;
+//     }
+// };
