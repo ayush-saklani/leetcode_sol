@@ -1,42 +1,102 @@
 class Solution {
 public:
+    // Kruskal's Algorithm 
+    int find(int i, vector<int>& parent) {
+        if (parent[i] == i) {
+            return i;
+        }
+        return parent[i] = find(parent[i], parent);
+    }
+    void unionx(int x, int y, vector<int>& parent, vector<int>& rank) {
+        int par_x = find(x, parent);
+        int par_y = find(y, parent);
+        if (par_x == par_y)
+            return;
+        if (rank[par_x] == rank[par_y]){
+            parent[par_x] = par_y;
+            rank[par_y]++;
+        }else if (rank[par_x] > rank[par_y]){
+            parent[par_y] = par_x;
+        }else if (rank[par_x] < rank[par_y]){
+            parent[par_x] = par_y;
+        }
+    }
     int minCostConnectPoints(vector<vector<int>>& points) {
         int v = points.size();
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
-        // {cost,node}
-        vector<bool> visited(v, false);
-        pq.push({0, 0});
+        vector<int> parent(v);
+        vector<int> rank(v, 0);
+        vector<vector<int>> vec;
+        for (int i = 0; i < v; i++) {
+            parent[i] = i;
+        }
+        for (int i = 0; i < v - 1; i++) {
+            for (int j = i + 1; j < v; j++) {
+                int wt = abs(points[i][0] - points[j][0]) +
+                         abs(points[i][1] - points[j][1]);
+                vec.push_back({wt, i, j});
+            }
+        }
+        sort(vec.begin(), vec.end());
+
         int res = 0;
-        while (!pq.empty()) {
-            auto top = pq.top();
-            pq.pop();
-
-            int cost = top.first, node = top.second;
-            if (visited[node]) continue;    // already visited node
-
-            visited[node] = true;
-
-            res = res + cost;
-            for (int i = 0; i < v; i++) {
-                if (i != node && !visited[i]) {
-                    int dis = abs(points[i][0] - points[node][0]) + abs(points[i][1] - points[node][1]);
-                    pq.push({dis, i});
-                }
+        for (int i = 0; i < vec.size(); i++) {
+            int u = vec[i][1];
+            int v = vec[i][2];
+            int wt = vec[i][0];
+            int par_u = find(u, parent);
+            int par_v = find(v, parent);
+            if (par_u != par_v) {
+                res = res + wt;
+                unionx(u, v, parent, rank);
             }
         }
         return res;
     }
 };
+// ############################ Code - 2 ############################
+// Code 3 faster version (prims algo)
+// class Solution {
+// public:
+//     int minCostConnectPoints(vector<vector<int>>& points) {
+//         int v = points.size();
+//         priority_queue<pair<int,int>, vector<pair<int,int>>,
+//         greater<pair<int,int>>> pq;
+//         // {cost,node}
+//         vector<bool> visited(v, false);
+//         pq.push({0, 0});
+//         int res = 0;
+//         while (!pq.empty()) {
+//             auto top = pq.top();
+//             pq.pop();
+
+//             int cost = top.first, node = top.second;
+//             if (visited[node]) continue;    // already visited node
+
+//             visited[node] = true;
+
+//             res = res + cost;
+//             for (int i = 0; i < v; i++) {
+//                 if (i != node && !visited[i]) {
+//                     int dis = abs(points[i][0] - points[node][0]) +
+//                     abs(points[i][1] - points[node][1]); pq.push({dis, i});
+//                 }
+//             }
+//         }
+//         return res;
+//     }
+// };
+// ############################ Code - 3 ############################
 // below code is example of how prims algo works
-// i have maintained parent array to return mst but it is not needed in this question 
-// parent in pq is also not required
-// but it is failing in time so above code is free from clutter and is fast
+// i have maintained parent array to return mst but it is not needed in this
+// question parent in pq is also not required but it is failing in time so above
+// code is free from clutter and is fast
 
 // class Solution {
 // public:
 //     int minCostConnectPoints(vector<vector<int>>& points) {
 //         int v = points.size();
-//         priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
+//         priority_queue<vector<int>, vector<vector<int>>,
+//         greater<vector<int>>> pq;
 //         // {cost,node,parent}
 //         vector<bool> visited(v, false);
 //         vector<int> parent(v, -1);
