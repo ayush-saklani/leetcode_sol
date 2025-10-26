@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<vector<int>> highestPeak(vector<vector<int>>& iswater) {
+        int m = iswater.size();
+        int n = iswater[0].size();
+        vector<vector<int>> res(m, vector<int>(n, -1));
+
+        queue<pair<int, int>> q;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (iswater[i][j] == 1) {
+                    res[i][j] = 0;
+                    q.push({i, j});
+                }
+            }
+        }
+        vector<int> x_direc = {0, 0, 1, -1};
+        vector<int> y_direc = {1, -1, 0, 0};
+        while (!q.empty()) {
+            auto top = q.front();
+            for (int i = 0; i < 4; i++) {
+                int x = top.first + x_direc[i];
+                int y = top.second + y_direc[i];
+                if (x >= 0 && y >= 0 && x < m && y < n && res[x][y] == -1) {
+                    res[x][y] = res[top.first][top.second] + 1;
+                    q.push({x, y});
+                }
+            }
+            q.pop();
+        }
+        return res;
+    }
+};
