@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int diameter;
+    int node = -1;
+    void dfs(unordered_map<int, vector<int>>& adj, unordered_map<int, int>& visited, int index, int level) {
+        visited[index] = 1;
+        if (level > diameter) {
+            node = index;
+            diameter = level;
+        }
+        for (auto i : adj[index]) {
+            if (visited[i] != 1) {
+                dfs(adj, visited, i, level + 1);
+            }
+        }
+    }
+    int diameter_finder(vector<vector<int>>& edges) {
+        if (edges.size() > 0) {
+            unordered_map<int, vector<int>> adj;
+            unordered_map<int, int> visited;
+            for (auto i : edges) {
+                adj[i[0]].push_back(i[1]);
+                adj[i[1]].push_back(i[0]);
+            }
+            diameter = -1;
+            visited.clear();
+            dfs(adj, visited, edges[0][0], 0);
+            diameter = -1;
+            visited.clear();
+            dfs(adj, visited, node, 0);
+            return diameter;
+        } else {
+            return 0;
+        }
+    }
+    int minimumDiameterAfterMerge(vector<vector<int>>& edges1, vector<vector<int>>& edges2) {
+        int dia1 = diameter_finder(edges1);
+        int dia2 = diameter_finder(edges2);
+        return max({dia1, dia2, ((dia1 + 1) / 2 + (dia2 + 1) / 2 + 1)});
+        // dia1 ka adha + dia2 ka adha + 1(connecting both graph) 
+        // ya agar isse bada diameter pehle se dia1 ya dia2 hai, toh vo hi answer hai
+        // eg, dia1 = 7, dia2 = 2, max(7,2,(4+1+1 = 6)) so already dia 1 is greatest 
+    }
+};
