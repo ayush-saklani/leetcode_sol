@@ -1,0 +1,52 @@
+class Solution {
+public:
+    void dfs(vector<vector<int>>& stones, vector<bool>& visited, int i) {
+        queue<vector<int>> q;
+        int n = stones.size();
+        visited[i] = true;
+        for (int j = 0; j < n; j++) {
+            if ((stones[j][0] == stones[i][0] || stones[j][1] == stones[i][1]) && visited[j] == false) {
+                dfs(stones,visited,j);
+            }
+        }
+    }
+    void bfs(vector<vector<int>>& stones, vector<bool>& visited, int i) {
+        queue<vector<int>> q;
+        int n = stones.size();
+        q.push({stones[i][0], stones[i][1]});
+        visited[i] = true;
+        while (!q.empty()) {
+            auto front = q.front();
+            q.pop();
+            for (int j = i; j < n; j++) {
+                if ((stones[j][0] == front[0] || stones[j][1] == front[1]) &&
+                    visited[j] == false) {
+                    q.push({stones[j][0], stones[j][1]});
+                    visited[j] = true;
+                }
+            }
+        }
+    }
+    int removeStones(vector<vector<int>>& stones) {
+        int island = 0;
+        int n = stones.size();
+        vector<bool> visited(n, false); // index store kar lenge stones ke
+        for (int i = 0; i < n; i++) {
+            if (visited[i] == false) {
+                bfs(stones, visited, i);
+                island++;
+            }
+        }
+        return n - island;
+    }
+};
+// simple hai
+// aapko dekhne hai ki ek island ya group mei kon kon ayenge
+// for each island 1 stone last ka bachega and rest will be removed
+// calculate island mei kitne -1 for all island
+// lets say 3 island hai
+// x1 - 1 -> island 1
+// x2 - 1 -> island 2
+// x3 - 1 -> island 3
+// total stone to remove is x1+x2+x3 -1-1-1
+// i.e total stones - total group or island (thats why that formula at the end )
