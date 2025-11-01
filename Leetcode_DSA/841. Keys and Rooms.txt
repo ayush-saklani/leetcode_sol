@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        int n = rooms.size();
+        vector<bool> key(n, false);
+        int room_count = 0;
+        queue<int> q;
+        q.push(0);
+        key[0] = true;
+        while (!q.empty()) {
+            int front = q.front();
+            q.pop();
+            room_count++;
+            for (auto i : rooms[front]) {
+                if (key[i] == false) {
+                    key[i] = true;
+                    q.push(i);
+                }
+            }
+        }
+        return room_count == n;
+    }
+};
+// simple bfs laga diya
+// and as we are going to rooms we are counting them
+// if visited rooms are equal as total room then true else false
