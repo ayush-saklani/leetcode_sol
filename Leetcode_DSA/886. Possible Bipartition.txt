@@ -1,0 +1,47 @@
+class Solution {
+public:
+    bool bfs(vector<vector<int>>& adj, vector<int>& visited, int i) {
+        queue<int> q;
+        q.push(i);
+        int vis = 1; // 0,1,2
+        visited[i] = vis;
+        while (!q.empty()) {
+            vis = vis == 1 ? 2 : 1;
+            int size = q.size();
+            while (size--) {
+                int front = q.front();
+                q.pop();
+                for (auto i : adj[front]) {
+                    if (visited[i] != 0) {
+                        if (visited[i] != vis) {
+                            return false;
+                        }
+                    } else {
+                        q.push(i);
+                        visited[i] = vis;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
+        vector<vector<int>> adj(n + 1);
+        vector<int> visited(n + 1, 0);
+        if (dislikes.size() <= 0)
+            return true;
+
+        for (auto& i : dislikes) {
+            adj[i[0]].push_back(i[1]);
+            adj[i[1]].push_back(i[0]);
+        }
+        for (int i = 1; i <= n; i++) {
+            if (visited[i] == 0) {
+                if (!bfs(adj, visited, i)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
