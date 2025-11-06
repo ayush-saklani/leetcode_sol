@@ -1,0 +1,26 @@
+class Solution {
+public:
+    // parent will used like we use visited array but here we dont have to store whole array 
+    // just use one variable to store the parent 
+    bool dfs(vector<vector<int>>& adj, vector<bool>& hasApple,int parent,int index,int& res){
+        bool has_apple = false;
+        if(hasApple[index] == true) has_apple = true;
+        for(int& i:adj[index]){
+            if(i!= parent && dfs(adj,hasApple,index,i,res)){
+                res = res+2;
+                has_apple = true;
+            } 
+        }
+        return has_apple;
+    }
+    int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
+        vector<vector<int>> adj(n);
+        for (auto &e : edges) {
+            adj[e[0]].push_back(e[1]);
+            adj[e[1]].push_back(e[0]);
+        }
+        int res = 0;
+        bool temp = dfs(adj,hasApple,-1,0,res);
+        return res;
+    }
+};

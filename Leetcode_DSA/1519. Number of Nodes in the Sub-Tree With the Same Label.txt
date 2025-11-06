@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> dfs(vector<vector<int>>& adj, string& labels, int index, int parent,vector<int>& res) {
+        vector<int> alpha(26,0);
+        for (int& itr : adj[index]) {
+            if (itr != parent) {
+                vector<int> temp = dfs(adj,labels,itr,index,res);
+                for(int i =0;i<26;i++){
+                    alpha[i] += temp[i];
+                }    
+            }
+        }
+        alpha[labels[index] - 'a'] ++;
+        res[index] = alpha[labels[index] - 'a'];
+        return alpha;
+    }
+    vector<int> countSubTrees(int n, vector<vector<int>>& edges, string labels) {
+        vector<vector<int>> adj(n);
+        for (auto& i : edges) {
+            adj[i[0]].push_back(i[1]);
+            adj[i[1]].push_back(i[0]);
+        }
+        vector<int> res(n);
+        dfs(adj, labels, 0, -1, res);
+        return res;
+    }
+};
