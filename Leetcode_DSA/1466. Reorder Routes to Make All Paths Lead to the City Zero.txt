@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minReorder(int n, vector<vector<int>>& connections) {
+        vector<vector<pair<int,bool>>> adj(n);
+        for(auto& i:connections){
+            adj[i[0]].push_back({i[1],true});
+            adj[i[1]].push_back({i[0],false});
+        }
+        vector<bool> visited(n,false);
+
+        queue<int> q;
+        q.push(0);
+        visited[0] = true;
+        int res = 0;
+        while(!q.empty()){
+            auto front = q.front();
+            q.pop();
+            for(auto& i:adj[front]){
+                if(!visited[i.first]){
+                    if(i.second == true) res++;
+                    q.push(i.first);
+                    visited[i.first] = true;
+                }
+            }
+        }
+        return res;
+    }
+};
