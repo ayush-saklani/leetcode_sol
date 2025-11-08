@@ -1,0 +1,79 @@
+// https://youtu.be/Y02Muq_xoCg?si=Mw8UCZCV--8trJHv&t=965 yaha se seekha (see the intiution)
+// n^2 wala solution maine khud se kar liya tha see the submissions but TLE error tha
+
+class Solution {
+public:
+    int find(vector<int>& parent,int i){
+        if(parent[i] == i){
+            return parent[i];
+        }else{
+            return parent[i] = find(parent,parent[i]);
+        }
+    }
+    void unionx(vector<int>&parent,vector<int>& rank,int x,int y){
+        int par_x = find(parent,x);
+        int par_y = find(parent,y);
+        if(par_x != par_y){
+            if(rank[par_x] > rank[par_y]){
+                parent[par_y] = par_x;
+            }else if(rank[par_x] < rank[par_y]){
+                parent[par_x] = par_y;
+            }else{
+                parent[par_y] = par_x;
+                rank[par_x]++;
+            }
+        }
+    }
+    int numberOfGoodPaths(vector<int>& vals, vector<vector<int>>& edges) {
+        int n = vals.size();
+        vector<int> parent(n);
+        vector<int> rank(n,0);
+        for(int i =0;i<n;i++){
+            parent[i] = i;
+        }
+
+        vector<vector<int>> adj(n);
+        for(auto& i:edges){
+            adj[i[0]].push_back(i[1]);
+            adj[i[1]].push_back(i[0]);
+        }
+
+        map<int,vector<int>> val_to_nodes; // this is auto sorted in accending order
+        for(int i=0;i<n;i++){
+            val_to_nodes[vals[i]].push_back(i);
+        }
+        vector<bool> active_node(n, false);
+        int res = 0;
+
+        for(auto& it:val_to_nodes){
+            vector<int>nodes = it.second;
+            for(int& u:nodes){
+                for(int&v : adj[u]){
+                    if(active_node[v]){
+                        unionx(parent,rank,u,v);
+                    }
+                }
+                active_node[u] = true;
+            }
+
+            // now calculate the paths with nC2 technique in same component 
+            vector<int> your_parent;
+            for(auto &u:nodes){
+                your_parent.push_back(find(parent,u));
+            }
+            sort(your_parent.begin(),your_parent.end());
+            int size = your_parent.size();
+            for(int i = 0;i<size;i++){
+                int temp = 0;
+                int curr = your_parent[i];
+                while(i<size && your_parent[i] == curr){
+                    temp++;
+                    i++;
+                }
+                i--;
+                res = res+ (temp*(temp-1))/2;
+            }
+        }       
+        return res+n;
+    }
+};

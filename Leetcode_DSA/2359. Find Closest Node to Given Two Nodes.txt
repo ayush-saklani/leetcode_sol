@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int closestMeetingNode(vector<int>& edges, int node1, int node2) {
+        if(node1 == node2) return node1;
+        int n = edges.size();
+        vector<int> visited(n,0);
+        // second value stores the bfs chain it is from 
+        // as this problem has cycle and without this cycle can be seen as result 
+        queue<pair<int,int>> q;
+        q.push({node1,1});
+        q.push({node2,2});
+        visited[node1] = 1;
+        visited[node2] = 2;
+        while(!q.empty()){
+            int size = q.size();
+            int res = -1;
+            while(size--){
+                auto front = q.front();
+                int front_val = front.first;
+                int branch = front.second;
+                q.pop();
+                if(edges[front_val] != -1 ){
+                    if(visited[edges[front_val]] == 0){
+                        q.push({edges[front_val],branch});
+                        visited[edges[front_val]] = branch;
+                    }else {
+                        // to find the answer with smallest index
+                        if(visited[edges[front_val]] != branch){
+                            if(res == -1){
+                                res = edges[front_val];
+                            }else{
+                                res = res < edges[front_val] ? res : edges[front_val];
+                            }
+                        }
+                    }
+                }
+            }
+            if(res != -1) return res;   // to find the answer with smallest index
+        }
+        return -1;
+    }
+};
