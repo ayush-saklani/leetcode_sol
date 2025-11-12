@@ -1,0 +1,71 @@
+https://leetcode.com/problems/largest-color-value-in-a-directed-graph/
+
+class Solution {
+public:
+    bool flag = true;
+    void dfs_topo(vector<vector<int>>& adj,vector<bool>& visited, vector<bool>& inrecursion,int index,vector<int>& topo){
+        visited[index] = true;
+        inrecursion[index] = true;
+        for(auto& itr:adj[index]){
+            if(!visited[itr]){
+                dfs_topo(adj,visited,inrecursion,itr,topo); 
+            }else if(inrecursion[itr]){ // cycle exist so flag kardo 
+                flag = false;
+            }
+        }
+        topo.push_back(index);
+        inrecursion[index] = false;
+    }
+    void dfs2(vector<vector<int>>& adj,vector<bool>& visited,int index,string &colors,vector<array<int,26>>& color_count){
+        visited[index] = true;
+        for(auto& itr:adj[index]){
+            if(!visited[itr]){
+                dfs2(adj,visited,itr,colors,color_count);
+            }
+            for(int i=0;i<26;i++){
+                color_count[index][i] = max(color_count[index][i], color_count[itr][i]);
+            }
+        }
+        color_count[index][colors[index] - 'a']++;
+    }
+    int largestPathValue(string colors, vector<vector<int>>& edges) {
+        int n = colors.length();
+        vector<vector<int>> adj(n);
+        for(auto& i:edges){
+            adj[i[0]].push_back(i[1]);
+        }
+        
+        //topo sort nikalo pehle
+        vector<bool> visited(n,false);
+        vector<bool> inrecursion(n,false);
+        vector<int> topo;
+        for(int i = 0;i<n;i++){
+            if(!visited[i]){
+                dfs_topo(adj,visited,inrecursion,i,topo);
+            }
+        }
+        reverse(topo.begin(),topo.end());
+        if(!flag){
+            return -1;
+        }
+
+        // putting dfs in topological to find largest color value
+        visited.assign(n,false);
+        vector<array<int,26>> color_count(n);
+        for(int i=0;i<n;i++) color_count[i].fill(0);
+
+        for(int i = 0 ; i < n ; i++){
+            int index = topo[i];
+            if(!visited[index]){
+                dfs2(adj,visited,index,colors,color_count);
+            }
+        }
+        int res = 0;
+        for(int u = 0; u < n; ++u){
+            for(int c = 0; c < 26; ++c) {
+                res = max(res, color_count[u][c]);
+            }
+        }
+        return res;
+    }
+};
