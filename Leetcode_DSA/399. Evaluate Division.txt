@@ -1,0 +1,38 @@
+https://leetcode.com/problems/evaluate-division/description/
+
+class Solution {
+public:
+    double dfs(unordered_map<string,vector<pair<string,double>>>& adj,unordered_map<string,bool>& visited,string index,string end,double val){
+        visited[index] = true;
+        if(index == end) return val;
+        double res = -1;
+        for(auto& i:adj[index]){
+            if(visited[i.first] != true){
+                res = max(res,dfs(adj,visited,i.first,end,val * i.second));
+            }
+        }
+        return res;
+    }
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        unordered_map<string,vector<pair<string,double>>> adj;
+        int n = equations.size();
+        for(int i =0;i<n;i++){
+            adj[equations[i][0]].push_back({equations[i][1],values[i]});
+            adj[equations[i][1]].push_back({equations[i][0],1.0/values[i]});
+        }
+        vector<double> res;
+        for(auto& i:queries){
+            unordered_map<string,bool> visited;
+            string start = i[0];
+            string end = i[1];
+            if(adj.count(start) && adj.count(end)){
+                double temp = dfs(adj,visited,start,end,1.0);
+                res.push_back(temp);
+            }else{
+                res.push_back(-1.0);
+
+            }
+        }
+        return res;
+    }
+};
