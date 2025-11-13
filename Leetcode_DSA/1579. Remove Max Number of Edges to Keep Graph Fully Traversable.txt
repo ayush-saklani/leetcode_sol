@@ -1,0 +1,69 @@
+https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/description/
+
+class Solution {
+public:
+    int find(vector<int>& parent,int x) {
+        if (x == parent[x]) {
+            return parent[x];
+        } else {
+            return parent[x] = find(parent, parent[x]);
+        }
+    }
+    bool unionx(vector<int>& parent, vector<int>& rank, int x, int y) {
+        int par_x = find(parent, x);
+        int par_y = find(parent, y);
+        if (par_x == par_y) return false;
+        if (rank[par_x] >= rank[par_y]) {
+            parent[par_y] = par_x;
+            rank[par_x] += rank[par_y];
+            rank[par_y] = 0;
+        } else {
+            parent[par_x] = par_y;
+            rank[par_y] += rank[par_x];
+            rank[par_x] = 0;
+        }
+        return true;
+    }
+
+    int maxNumEdgesToRemove(int n, vector<vector<int>>& edges) {
+        vector<int> parent1(n, 0);
+        vector<int> parent2(n, 0);
+        vector<int> rank1(n, 1); // remember that this graph is 1 indexed
+        vector<int> rank2(n, 1); // remember that this graph is 1 indexed
+        for (int i = 0; i < n; i++) {
+            parent1[i] = i;
+            parent2[i] = i;
+        }
+        sort(edges.begin(), edges.end(), [](auto& x, auto& y) { return x[0] > y[0]; });
+        int res = 0;
+        for (auto& i : edges) {
+            int type = i[0];
+            int u = i[1] - 1;
+            int v = i[2] - 1;
+            if (type == 3) { // 3 wale agar dono nahi ai tabhi count karna hai. agar ek mei bhi use hai toh lenge usko 
+                bool used1 = unionx(parent1, rank1, u, v);
+                bool used2 = unionx(parent2, rank2, u, v);
+                if (!used1 && !used2) {
+                    res++;
+                }
+            } else if (type == 1) {
+                if (!unionx(parent1, rank1, u, v)){
+                    res++;
+                }
+            } else if (type == 2) {
+                if (!unionx(parent2, rank2, u, v)){
+                    res++;
+                }
+            }
+        }
+        int count1 = 0;
+        int count2 = 0;
+        for (int i = 0; i < n; i++) {
+            if(parent1[i] == i) count1++;
+            if(parent2[i] == i) count2++;
+            if(count1>1) return -1;
+            if(count2>1) return -1;
+        }
+        return res;
+    }
+};
