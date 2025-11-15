@@ -1,0 +1,119 @@
+https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/
+
+class Solution {
+public:
+    int find(vector<int>& parent, int x) {
+        if (parent[x] == x) {
+            return parent[x];
+        } else {
+            return parent[x] = find(parent, parent[x]);
+        }
+    }
+    bool unionx(vector<int>& parent, vector<int>& rank, int x, int y) {
+        int par_x = find(parent, x);
+        int par_y = find(parent, y);
+        if (par_x != par_y) {
+            if (rank[par_x] >= rank[par_y]) {
+                parent[par_y] = par_x;
+                rank[par_x] += rank[par_y];
+                rank[par_y] = 0;
+            } else {
+                parent[par_x] = par_y;
+                rank[par_y] += rank[par_x];
+                rank[par_x] = 0;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    bool single_comp(vector<int>& rank){
+        int count = 0;
+        for(int i=0;i<rank.size();i++){
+            if(rank[i] > 0){
+                count++;
+            }
+        }
+        return count == 1;
+    }
+    vector<vector<int>> findCriticalAndPseudoCriticalEdges(int n, vector<vector<int>>& edges) {
+        vector<int> parent(n);
+        vector<int> rank(n, 1);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+
+        //reserving original indexes of edges
+        int x = edges.size();
+        for (int i = 0; i < x; i++) {
+            edges[i].push_back(i);
+        }
+        
+        // sorting edges on the basis of cost for kruskal algo (accending order)
+        sort(edges.begin(), edges.end(),[](auto& a, auto& b) { return a[2] < b[2]; });
+        
+        // calculating Minimum spanning cost kruskal algo
+        int mst_cost = 0;
+        for (int it = 0; it < x; it++) {
+            if (unionx(parent, rank, edges[it][0], edges[it][1])) {
+                mst_cost = mst_cost + edges[it][2];
+            }
+        }
+
+        // we will remove one edge at a time. 
+        // if the mst cost increases after that edge removal or if it disconnect 2 components then it is critical edge 
+        vector<int> critical;
+        vector<bool> isCritical(x, false);
+        for (int i = 0; i < x; i++) {
+            int new_cost = 0;
+            parent.assign(n, 0);
+            rank.assign(n, 1);
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+            for (int it = 0; it < x; it++) {
+                if (it != i) {
+                    if (unionx(parent, rank, edges[it][0], edges[it][1])) {
+                        new_cost += edges[it][2];
+                    }
+                }
+            }
+            if (!single_comp(rank) || new_cost > mst_cost) {
+                critical.push_back(edges[i][3]);
+                isCritical[edges[i][3]] = true;
+            }
+        }
+
+        // we will force one edge at a time. 
+        // if it is critical edge then dont include that edge
+        // if the mst cost is same then it is non-critical edge
+        // if it increase the cost then it is bad edge so not include that edge
+        vector<int> non_critical;
+        for (int i = 0; i < x; i++) {
+            int new_cost = 0;
+            parent.assign(n, 0);
+            rank.assign(n, 1);
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
+            }
+            if(isCritical[edges[i][3]]){ // critical hai toh is edge ko skip
+                continue;
+            }
+            if (unionx(parent, rank, edges[i][0], edges[i][1])) {   // force this edge
+                new_cost += edges[i][2];                            // and add the cost
+            }
+            for (int it = 0; it < x; it++) {
+                if (it != i) {
+                    if (unionx(parent, rank, edges[it][0], edges[it][1])) {
+                        new_cost += edges[it][2];
+                    }
+                }
+            }
+            if (new_cost == mst_cost) {
+                non_critical.push_back(edges[i][3]);
+            }
+        }
+
+        return {critical,non_critical};
+    }
+};
