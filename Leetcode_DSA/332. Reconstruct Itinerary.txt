@@ -1,0 +1,33 @@
+https://leetcode.com/problems/reconstruct-itinerary/description/
+
+class Solution {
+public:
+    // basically eularian circuit nikalna hai. hierholzer algorithm (name is tuff but uses DFS algo)
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        int n = tickets.size();
+        unordered_map<string,vector<string>> adj;
+        for(auto& i:tickets){
+            adj[i[0]].push_back(i[1]);
+        }
+        for(auto& itr:adj){
+            vector<string>& i = itr.second;
+            // lexical order ke like decending order Z->A, taaking back se nikalne mei aasani ho
+            sort(i.begin(),i.end(),[](string& a,string& b){return b<a;}); 
+        }
+        stack<string> st;
+        vector<string> res;
+        st.push("JFK");
+        while(!st.empty()){
+            string front = st.top();
+            if(adj[front].size() > 0){
+                st.push(adj[front].back());
+                adj[front].pop_back();
+            }else{
+                res.push_back(front);
+                st.pop();
+            }
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
