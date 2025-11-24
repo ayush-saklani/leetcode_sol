@@ -1,0 +1,54 @@
+https://leetcode.com/problems/validate-binary-tree-nodes/
+
+// in this i have altered the basic DSU implementation for this question usage
+class Solution {
+public:
+    int find(vector<int>& parent,int x){
+        if(parent[x] == x){
+            return x;
+        }else{
+            return parent[x] = find(parent,parent[x]); // path compression if you ever need DSU
+        }
+    }
+    bool unionx(vector<int>& parent,int x,int y){   // y = children, x = parent
+        int par_x = find(parent,x);
+        int par_y = find(parent,y);
+        if(par_x != par_y){
+            if(par_y != y) return false; // y is children and if children has parent already, false
+            parent[par_y] = par_x;
+            return true;
+        }else{
+            return false;
+        }
+    }
+    bool validateBinaryTreeNodes(int n, vector<int>& leftChild, vector<int>& rightChild) {
+        vector<int> parent(n);
+        for(int i=0;i<n;i++){
+            parent[i] = i;
+        }
+        for(int i=0;i<n;i++){
+            int right = rightChild[i];
+            if(right != -1){
+                if(!unionx(parent,i,right)){
+                    return false;
+                }
+            }
+            int left = leftChild[i];
+            if(left != -1){
+                if(!unionx(parent,i,left)){
+                    return false;
+                }
+            }
+        }
+        int temp = -1;
+        for(int i=0;i<n;i++){
+            int par = find(parent,i);
+            if(temp != par){ // logic to find if 2 or more seperate doent exists and its a whole tree
+                if(temp!=-1) return false;
+                temp = par;
+            }
+        }
+
+        return true;
+    }
+};

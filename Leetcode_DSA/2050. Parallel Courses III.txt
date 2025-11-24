@@ -1,0 +1,36 @@
+https://leetcode.com/problems/parallel-courses-iii/description/
+
+class Solution {
+public:
+    int minimumTime(int n, vector<vector<int>>& relations, vector<int>& time) {
+        vector<int> indegree(n+1,0);
+        vector<vector<int>> adj(n+1);
+        for(auto& it:relations){
+            adj[it[0]].push_back(it[1]);
+            indegree[it[1]]++;
+        }
+        queue<int> q; 
+        vector<int> dp(n+1, 0); // store the time to complete upto that node
+        for(int i=1;i<=n;i++){
+            if(indegree[i] == 0){
+                q.push(i);      // this from topological sorting, we get all the starting node with indegree = 0 
+                dp[i] = time[i-1];  // cost upto here is simple
+            }
+        }
+        int res = 0;        // res is result
+        while(!q.empty()){
+            int front = q.front();
+            q.pop();
+            res = max(res, dp[front]); // just update the res with the maximum time to reach this node and 
+            // we will eventually get the ending node here as well
+            for(auto& i:adj[front]){
+                dp[i] = max(dp[i],dp[front] + time[i-1]); // update the dp => max(present_cost + cost_upto_next_node, dp[i])
+                indegree[i]--;  // reduce indegree as we are done this prerequzite 
+                if(indegree[i] == 0){
+                    q.push(i);  // if indegree of node is now 0, that means all its prerequizite are done so push into q
+                }
+            }
+        }
+        return res;
+    }
+}; 

@@ -1,0 +1,49 @@
+https://leetcode.com/problems/shortest-path-visiting-all-nodes/
+
+class Solution {
+public:
+    int shortestPathLength(vector<vector<int>>& graph) {
+        // bit mapping concept use kara hai 
+        int n = graph.size();
+        if(n == 1) return 0;
+
+        vector<vector<char>> visited(n, vector<char>(1<<n, 0));
+        // set<pair<int,int>> visited; // node,mask
+        queue<pair<int,int>> q;
+        for(int i=0;i<n;i++){  
+            if(graph[i].size()){
+                q.push({i,1<<i});
+                visited[i][1 << i] = 1;
+                // visited.insert({i,1<<i});   // put all the node and mask as well which denotes node this node has travelled
+            }      
+        }
+
+        int target_mask = (1<<n)-1; // e.g. 4 node mean 1111 is taget mask (15) (2^4 - 1) 
+        int res = 0; 
+        while(!q.empty()){
+            int size = q.size();
+            while(size--){
+                auto front = q.front();
+                int u = front.first;
+                int existing_mask = front.second;
+                for(auto& i:graph[front.first]){
+                    int v = i;
+                    int new_mask = existing_mask | (1<<v);
+                    if(new_mask == target_mask) return res+1;
+                    // if(!visited.contains({v,new_mask})){
+                    if(!visited[v][new_mask]){
+                        q.push({v,new_mask});
+                        visited[v][new_mask] = 1;
+                        // visited.insert({v,new_mask});
+                    }
+                }
+                q.pop();
+            }
+            res++;
+        }
+
+        return res;
+    }
+};
+// https://www.youtube.com/watch?v=m73DRkEo8Ko&list=PLpIkg8OmuX-I_49pdy1XFY6OcATnxUrrO&index=40
+// jzada muskil lage toh ye dekh le
