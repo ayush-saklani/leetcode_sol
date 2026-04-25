@@ -1,3 +1,113 @@
+// ================================ new faster approach ===================================
+class Solution {
+public:
+    // first approach : check if the region touch the edge. if it doesn't, go again and capture that region
+    vector<vector<int>> direc = {{0,1},{0,-1},{1,0},{-1,0}};
+    void fill_it_up(vector<vector<char>>& board,vector<vector<int>>& visited,int i,int j,int m,int n){
+        queue<pair<int,int>> q;
+        q.push({i,j});
+        visited[i][j] = 1;
+        board[i][j] = 'X';
+        while(!q.empty()){
+            auto temp = q.front();
+            q.pop();
+            for(auto& di:direc){
+                int ix = temp.first + di[0]; 
+                int iy = temp.second + di[1];
+                if(ix < m && ix>=0 && iy<n && iy >=0){
+                    if(board[ix][iy] == 'O'){
+                        q.push({ix,iy});
+                        board[ix][iy] = 'X';
+                        visited[ix][iy] = 1;
+                    }
+                }
+            }
+        }
+    }
+    bool check(vector<vector<char>>& board,vector<vector<int>>& visited,int i,int j,int m,int n){
+        bool edge = true;
+        queue<pair<int,int>> q;
+        q.push({i,j});
+        visited[i][j] = 1;
+        while(!q.empty()){
+            auto temp = q.front();
+            q.pop();
+            if(edge && (temp.first == m-1 || temp.first == 0 || temp.second == n-1 || temp.second == 0)){
+                edge =  false;
+            }
+            for(auto& di:direc){
+                int ix = temp.first + di[0]; 
+                int iy = temp.second + di[1];
+                if(ix < m && ix>=0 && iy<n && iy >=0){
+                    if(board[ix][iy] == 'O' && visited[ix][iy] == 0){
+                        q.push({ix,iy});
+                        visited[ix][iy] = 1;
+                    }
+                }
+            }
+        }
+        return edge;
+    }
+    void solve2(vector<vector<char>>& board) {
+        int m = board.size();
+        int n = board[0].size();
+        vector<vector<int>> visited(m,vector<int>(n,0));
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(board[i][j] == 'X'){
+                    visited[i][j] = 1;
+                } else {
+                    if(visited[i][j] == 0 && check(board,visited,i,j,m,n)){
+                        fill_it_up(board,visited,i,j,m,n);
+                    }
+                }
+            }
+        }
+    }
+
+
+    // second appraoch : clear the boundary and its connected region and fill rest of the cells as 'X'
+    // in this i am using the check() function from the previous question to save effort
+    // and it also do the thing i want to do here
+    void solve(vector<vector<char>>& board) {
+        int m = board.size();
+        int n = board[0].size();
+        vector<vector<int>> visited(m,vector<int>(n,0));
+        
+        for(int j=0;j<n;j++){
+            if(board[0][j] != 'X'){
+                check(board,visited,0,j,m,n);
+            } 
+            visited[0][j] = 1;
+            
+            if(board[m-1][j] != 'X'){
+                check(board,visited,m-1,j,m,n);
+            } 
+            visited[m-1][j] = 1;
+        }
+
+        for(int i=0;i<m;i++){
+            if(board[i][0] != 'X'){
+                check(board,visited,i,0,m,n);
+            } 
+            visited[i][0] = 1;
+            
+            if(board[i][n-1] != 'X'){
+                check(board,visited,i,n-1,m,n);
+            } 
+            visited[i][n-1] = 1;
+        }
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(visited[i][j] !=1) {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+};
+// ==================== old slow approach ===============================
 class Solution {
 public:
     void solve(vector<vector<char>>& board) {

@@ -1,0 +1,67 @@
+// same question as [130. Surrounded Regions]
+// same approach go along the edge 
+// if any enclaves touching the edge is encountered then mark the whole enclave as visited 
+// after the edges are cleared then go the core and find the land cell which is not connected to the edge and is still unvisited
+
+class Solution {
+public:
+    vector<vector<int>> direc = {{0,1},{0,-1},{1,0},{-1,0}};
+    void check(vector<vector<int>>& grid,vector<vector<int>>& visited,int i,int j,int m,int n){
+        queue<pair<int,int>> q;
+        q.push({i,j});
+        visited[i][j] = 1;
+        while(!q.empty()){
+            auto temp = q.front();
+            q.pop();
+            for(auto& di:direc){
+                int ix = temp.first + di[0]; 
+                int iy = temp.second + di[1];
+                if(ix < m && ix>=0 && iy<n && iy >=0){
+                    if(grid[ix][iy] == 1 && visited[ix][iy] == 0){
+                        q.push({ix,iy});
+                        visited[ix][iy] = 1;
+                    }
+                }
+            }
+        }
+    }
+    int numEnclaves(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>> visited(m,vector<int>(n,0));
+        
+        for(int j=0;j<n;j++){
+            if(grid[0][j] == 1){
+                check(grid,visited,0,j,m,n);
+            } 
+            visited[0][j] = 1;
+            
+            if(grid[m-1][j] == 1){
+                check(grid,visited,m-1,j,m,n);
+            } 
+            visited[m-1][j] = 1;
+        }
+
+        for(int i=0;i<m;i++){
+            if(grid[i][0] == 1){
+                check(grid,visited,i,0,m,n);
+            } 
+            visited[i][0] = 1;
+            
+            if(grid[i][n-1] == 1){
+                check(grid,visited,i,n-1,m,n);
+            } 
+            visited[i][n-1] = 1;
+        }
+
+        int sol = 0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(visited[i][j] != 1 && grid[i][j] == 1) {
+                    sol ++;
+                }
+            }
+        }
+        return sol;
+    }
+};
