@@ -1,0 +1,54 @@
+https://leetcode.com/problems/design-graph-with-shortest-path-calculator/description/
+
+class Graph {
+public:
+    vector<vector<pair<int,int>>> adj;
+    // vector<vector<int>> grid;    // for floyd_warshal
+    Graph(int n, vector<vector<int>>& edges) {
+        adj.resize(n);
+        // grid.assign(n,vector<int>(n,INT_MAX)); // for floyd_warshal
+        for(auto& i:edges){
+            adj[i[0]].push_back({i[1],i[2]});
+        }
+        // floyd_warshal(); // call floyd_warshal for precomputer
+    }
+    
+    void addEdge(vector<int> edge) {
+        adj[edge[0]].push_back({edge[1],edge[2]});
+        // floyd_warshal(); // for floyd_warshal recomputation
+    }
+    
+    int shortestPath(int node1, int node2) {
+        return dijkstra(node1,node2);
+        // return grid[node1][node2];   // for floyd_warshal
+    }
+    void floyd_warshal(){   /* write code here */   }
+    int dijkstra(int u, int v) {
+        vector<int> res(adj.size(),INT_MAX);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        res[u] = 0;
+        pq.push({0,u});
+        while(!pq.empty()){
+            auto top = pq.top();
+            pq.pop();
+            int d = top.first;
+            int node = top.second;
+            for(auto& i:adj[node]){
+                int adjNode = i.first;
+                int weight = i.second;
+                if(d + weight < res[adjNode]){
+                    res[adjNode] = d + weight;
+                    pq.push({d + weight,adjNode});
+                }
+            }
+        }
+        return res[v]==INT_MAX?-1:res[v];
+    }
+};
+
+/**
+ * Your Graph object will be instantiated and called as such:
+ * Graph* obj = new Graph(n, edges);
+ * obj->addEdge(edge);
+ * int param_2 = obj->shortestPath(node1,node2);
+ */

@@ -1,0 +1,43 @@
+https://leetcode.com/problems/bus-routes/description/
+
+class Solution {
+public:
+    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+        if (source == target) return 0;
+        int n = routes.size();
+        unordered_map<int, vector<int>> adj; // stop -> list of route indices
+
+        for (int i = 0; i < n; i++) {
+            for (int stop : routes[i]) {
+                adj[stop].push_back(i);
+            }
+        }
+        if (adj.find(source) == adj.end() || adj.find(target) == adj.end()) return -1;
+
+        vector<bool> visited(n,false);
+        unordered_map<int, char> visitedStop; // stops can be large values
+
+        queue<pair<int,int>> q; // (stop, busesTaken)
+        q.push({source, 0});
+
+        while (!q.empty()) {
+            auto front = q.front(); q.pop();
+            int stop = front.first;
+            int buses = front.second;
+            // try all routes passing this stop
+            for (int route : adj[stop]) {
+                if (!visited[route]){    
+                    visited[route] = true;           // take this bus (route)
+                    for (int nxtStop : routes[route]) {     // riding this route, visit all stops on it
+                        if (nxtStop == target) return buses + 1;
+                        if (!visitedStop[nxtStop]) {
+                            visitedStop[nxtStop] = 1;
+                            q.push({nxtStop, buses + 1}); // after taking this bus, you're at nxtStop with +1 bus taken
+                        }
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+};
