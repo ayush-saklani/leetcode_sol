@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int res = 0;    // res
+        int counter = 0;// internal sliding window counter that will be campared to res again and again
+        int last_op = 0;// index at witch last duplicate was found and from which current window is started
+        unordered_map<char,int> temp;
+        for(int i = 0; i < s.length(); i++) {
+            if(temp.count(s[i]) != 0 && temp[s[i]] >= last_op) { //  that mean duplicate is inside the window
+                last_op = temp[s[i]] + 1;   // update the window start to the last duplicate of current + 1
+            }
+
+            temp[s[i]] = i; // update new index in map
+
+            counter = i - last_op + 1;
+            res = max(res, counter); 
+        }
+
+        return res;
+    }
+};
+
+// slower brute-force approach that i came with first which led to optimization of first
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int res = 0;
+        int counter = 0;
+        unordered_map<char,bool> temp;
+        for(int i =0;i<s.length();i++){
+            if(temp.count(s[i]) == 0){
+                temp[s[i]] = true;
+                counter++;
+                res = max(res,counter);
+            }else{
+                res = max(res,counter);
+                counter = 0;
+                temp.clear();
+                int t = i;
+                while(t>=0 && temp.count(s[t]) == 0){
+                    temp[s[t]] = true;
+                    counter++;
+                    t--;
+                } 
+            }
+        }
+        return res;
+    }
+};
