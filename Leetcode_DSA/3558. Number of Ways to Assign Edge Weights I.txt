@@ -1,0 +1,100 @@
+class Solution {
+public:
+    // For 2^13 (2^(8+4+1))
+    // b = 1101₂ 
+    // a progression:
+    // 2     4(X)   16    256   
+    // 2^1   2^2    2^4   2^8
+    // 
+    // Use powers corresponding to set bits:
+    // 1101₂ -> use 2^8, skip 2^2, use 2^4, use 2^1
+    // Answer = 256 × 16 × 2 = 8192
+
+    // For 3^5 = 3^(4+1) = 3^4 * 3^1 = 81*3 = 243
+    // b = 101₂
+    // a progression:
+    // 3     9(X)   81
+    // 3^1   3^2    3^4
+    //
+    // Use powers corresponding to set bits:
+    // 101₂ -> use 3^4, skip 3^2, use 3^1
+    // Answer = 81 × 3 = 243
+    long long power(long long a, long long b) {
+        long long mod = 1e9 + 7;
+        long long ans = 1;
+
+        while (b) {
+            if (b & 1) {
+                ans = (ans * a) % mod;
+            }
+            a = (a * a) % mod;
+            b = b >> 1;
+        }
+        return ans;
+    }
+    int assignEdgeWeights(vector<vector<int>>& edges) {
+        // edge to tree
+        int n = edges.size() + 1;
+        vector<vector<int>> adj(n + 1);
+
+        for (auto& e : edges) {
+            int u = e[0];
+            int v = e[1];
+
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+
+        // first we find the depth of this tree
+        queue<int> q;
+        vector<bool> visited(n + 1, false);
+
+        q.push(1); // root hai
+        visited[1] = true;
+
+        int depth = -1; // starting above root so -1
+
+        while (!q.empty()) {
+            int sz = q.size();
+            depth++;
+            while (sz--) {
+                int u = q.front();
+                q.pop();
+
+                for (auto v : adj[u]) {
+                    if (!visited[v]) {
+                        visited[v] = true;
+                        q.push(v);
+                    }
+                }
+            }
+        }
+        // now we have depth
+        if (depth == 0) {
+            return 1;
+        }
+
+        // SHORTCUT
+        // AS IN THIS QUESTION THE POWER IS ALWAYS 2 TO THE POWER
+        // SO WE CAN MAKE A SHORTCUT
+        long long ans = 1;
+        long long mod = 1e9 + 7;
+        for (int i = 0; i < depth - 1; i++) {
+            ans = (ans * 2) % mod; // 1*2*2*2*2... D TIMES
+        }
+        return ans;
+        // SHORTCUT
+
+
+        return power(2, depth - 1); // THIS IS FOR ANY N TO THE POWER AND IS FASTER
+        // here we are finding 2^(n-1)
+        // edge weight can either be 2 or 1
+        // in case of any depth (even or odd) 
+        // no of 2 will always result in even weight
+        // but no of one decide if its finally even or odd
+        // so for all depth, 1's should be odd then only final weight is odd
+        // so in tree of (d)depth we have to calculate all combination with
+        // (1 1's) + (3 1's) + (5 1's) ....etc. i.e combination
+        // dC1 + dC3 + dC5 .... = 2^n / 2 = 2^(n-1)
+    }
+};
