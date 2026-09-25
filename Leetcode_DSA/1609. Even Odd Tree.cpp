@@ -9,6 +9,38 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+// best approach
+class Solution {
+public:
+    bool isEvenOddTree(TreeNode* root) {
+        queue<TreeNode*> q;
+        q.push(root);
+        int level = 0;
+        while(!q.empty()){
+            int size = q.size();
+            int temp = -1;
+            while(size){
+                auto front = q.front();
+                if(front->left)q.push(front->left);
+                if(front->right)q.push(front->right);
+                
+                if(level%2 == 0 && front->val%2 == 0) return false;
+                else if(level%2 != 0 && front->val%2 != 0) return false;
+
+                if(temp != -1){
+                    if(level%2==0 && front->val<=temp) return false;
+                    else if(level%2!=0 && front->val>=temp) return false;
+                }
+                temp = front->val;
+                q.pop();
+                size--;
+            }
+            level++;
+        }
+        return true;
+    }
+};
+// worst approach i thought (brute force)
 class Solution {
 public:
     unordered_map<int,vector<int>> mp;
