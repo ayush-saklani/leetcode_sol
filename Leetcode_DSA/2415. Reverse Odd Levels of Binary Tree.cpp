@@ -11,10 +11,14 @@
  */
 class Solution {
 public:
+    // vector<vector<int>> level_wise;  // vector is faster than unordered_map here cuz we are using level as index and it is continuous
     unordered_map<int,vector<int>> level_wise;
     void inorder(TreeNode* root, int level) {
         if(!root) return;
+        
+        // if (level == level_wise.size()) level_wise.push_back({});
         level_wise[level].push_back(root->val);
+
         inorder(root->left, level + 1);
         inorder(root->right, level + 1);
     }
