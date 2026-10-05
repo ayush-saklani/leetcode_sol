@@ -13,39 +13,37 @@
 class Solution {
 public:
     TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {
-        unordered_map<int, pair<TreeNode*,int>> temp; // { node_val , {node_ptr, is_it_someone's_child_? } }  
+        unordered_map<int, pair<TreeNode*,bool>> temp; // { node_val , {node_ptr, is_it_someone's_child_? } }  
         TreeNode* root;
-        for (int i = 0; i < descriptions.size(); i++) {
-            // node hai toh nikalo ya toh naya create karo
-            TreeNode* node;
-            if(temp.count(descriptions[i][0])){
-                node = temp[descriptions[i][0]].first;
-            }else{
-                node = new TreeNode(descriptions[i][0]);
-                temp[descriptions[i][0]] = {node,false};
+        for (auto& it: descriptions) {
+            TreeNode* node; 
+            if(temp.count(it[0])){          // node hai toh nikalo
+                node = temp[it[0]].first;
+            }else{                          // node nahi hai toh naya create karo
+                node = new TreeNode(it[0]);
+                temp[it[0]] = {node,false};
             }
 
-            // child hai toh nikalo ya toh naya create karo
             TreeNode* child;
-            if (temp.count(descriptions[i][1])) {
-                child = temp[descriptions[i][1]].first;
-                // child pehle se hai toh is someone child = true kardo
-                temp[descriptions[i][1]].second = true;
-            } else {
-                child = new TreeNode(descriptions[i][1]);
-                temp[descriptions[i][1]] = {child,true};
+            if (temp.count(it[1])) {        // child hai toh nikalo
+                child = temp[it[1]].first;
+                temp[it[1]].second = true;  // child hai and is someone child = true kardo
+            } else {                        // child node nahi hai toh naya create karo
+                child = new TreeNode(it[1]);
+                temp[it[1]] = {child,true};
             }
 
-            if (descriptions[i][2] == 0) { // acc to rules
+            if (it[2] == 0) {               // acc to rules, 0 mean right child
                 node->right = child;
             } else {
                 node->left = child;
             }
         }
-        // last mei ek hi bachega with is someone child? = false return that as answer
+        // last mei ek hi bachega with [ (is someone child?) = false ] return that as answer
         for(auto &it : temp){
             if(it.second.second == false){
-                root = it.second.first;
+                // root = it.second.first;
+                return it.second.first;
             }
         }
         return root;
